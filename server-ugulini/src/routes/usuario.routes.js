@@ -1,25 +1,13 @@
-const { Router } = require("express");
 const controller = require("../controllers/usuario.controller");
 const auth = require("../middlewares/auth");
+module.exports = router;
+const express = require("express");
+const router = express.Router();
+const controller = require("../controllers/usuario.controller");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
-const router = Router();
-
-router.post("/login", controller.login); 
-
-
-router.get("/testdb", async (req, res) => {
-  try {
-    const { PrismaClient } = require("@prisma/client");
-    const prisma = new PrismaClient();
-
-    const users = await prisma.usuario.findMany();
-    res.json(users);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
-});
-
+// ROTA TEMPORÁRIA PARA RESETAR SENHA
 router.get("/resetarSenha", async (req, res) => {
   try {
     const hash = "$2a$10$xysPA0cdf.NC11FL8coQTOFnPE.N65f.hvIjpzKfUFRq4YYeCob16";
@@ -35,5 +23,7 @@ router.get("/resetarSenha", async (req, res) => {
   }
 });
 
+// ROTAS ORIGINAIS
+router.post("/login", controller.login);
 
 module.exports = router;
