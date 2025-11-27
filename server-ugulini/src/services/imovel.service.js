@@ -51,8 +51,8 @@ module.exports = {
       const imovel = await prisma.imovel.create({
         data: {
           valor: new Prisma.Decimal(data.valor),
-          nome_sobrenome: data.nome_sobrenome,
-          telefone: data.telefone,
+          nome_sobrenome_prop: data.nome_sobrenome,
+          telefone_prop: data.telefone,
           tipo: data.tipo,
           finalidade: data.finalidade,
           status_imovel: data.status_imovel || "Disponível",
