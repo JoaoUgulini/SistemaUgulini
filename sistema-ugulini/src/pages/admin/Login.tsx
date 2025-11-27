@@ -14,7 +14,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // 🔥 Redirecionamento automático
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token) {
@@ -35,7 +34,7 @@ const Login = () => {
       console.error("Erro no login", error);
 
       if (error.response?.data?.error) {
-        alert(error.response.data.error);
+    alert(JSON.stringify(error.response.data, null, 2));
       } else {
         alert("Erro ao conectar com o servidor.");
       }
