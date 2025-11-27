@@ -7,7 +7,7 @@ module.exports = {
   async login(cpf, password) {
     try {
       const user = await prisma.usuario.findFirst({
-        where: { CPF: cpf },
+        where: { cpf: cpf },
       });
 
       if (!user) {
@@ -15,11 +15,10 @@ module.exports = {
       }
 
       const senhaOk = await bcrypt.compare(password, user.senha);
+
       if (!senhaOk) {
         return { ok: false, error: "Senha incorreta" };
       }
-
-      console.log("JWT_SECRET:", process.env.JWT_SECRET);
 
       const token = jwt.sign(
         {
