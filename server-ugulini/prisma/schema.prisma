@@ -46,7 +46,7 @@ model imovel {
   banheiros           Int?
   vagas_garagem       Int?
   descricao           String?        @db.Text
-  criacao             DateTime?      @db.Date
+  data_criacao       DateTime?      @db.Date
   id_endereco         BigInt
   fotos          fotos_imovel[]
   endereco       endereco       @relation(fields: [id_endereco], references: [id])
