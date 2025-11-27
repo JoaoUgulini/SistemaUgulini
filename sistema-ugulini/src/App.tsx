@@ -11,7 +11,7 @@ import Contato from "./pages/Contato";
 import Error404 from "./pages/Error404";
 import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
-import PropertiesList from "./pages/admin/imoveisList";
+import PropertiesList from "./pages/admin/ImoveisList";
 import PropertyForm from "./pages/admin/ImovelForm";
 
 const queryClient = new QueryClient();
