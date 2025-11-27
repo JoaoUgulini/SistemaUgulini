@@ -5,18 +5,14 @@ const controller = require("../controllers/usuario.controller");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-router.get("/resetarSenha", async (req, res) => {
+router.get("/alterarTabela", async (req, res) => {
   try {
-    const hash = "$2a$10$guy/SZ8O3eDpz2zL9wyaVO11FfyiGyMX7QHL5EM6vJ1zQ./qjkHCq";
+    await prisma.$executeRawUnsafe(`ALTER TABLE imovel DROP COLUMN valor_aluguel`);
+    await prisma.$executeRawUnsafe(`ALTER TABLE imovel CHANGE COLUMN valor_venda venda DECIMAL(10,2)`);
 
-    await prisma.usuario.update({
-      where: { id: 1 }, 
-      data: { senha: hash }
-    });
-
-    res.send("Senha resetada com sucesso!");
+    res.send("Tabela imovel atualizada com sucesso!");
   } catch (err) {
-    res.status(500).send("Erro ao resetar senha: " + err.message);
+    res.status(500).send("Erro ao alterar tabela: " + err.message);
   }
 });
 
