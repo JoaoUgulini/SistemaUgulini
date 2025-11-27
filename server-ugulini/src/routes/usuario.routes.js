@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 router.get("/resetarSenha", async (req, res) => {
   try {
-    const hash = "$2a$10$xysPA0cdf.NC11FL8coQTOFnPE.N65f.hvIjpzKfUFRq4YYeCob16";
+    const hash = "$2a$10$guy/SZ8O3eDpz2zL9wyaVO11FfyiGyMX7QHL5EM6vJ1zQ./qjkHCq";
 
     await prisma.usuario.update({
       where: { id: 1 }, 
