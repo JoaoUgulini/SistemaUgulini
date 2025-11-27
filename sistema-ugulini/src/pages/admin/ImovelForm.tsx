@@ -343,7 +343,6 @@ const ImovelForm = () => {
                   <Input
                     value={logradouro}
                     onChange={(e) => setLogradouro(e.target.value)}
-                    placeholder="Rua das Flores"
                     required
                   />
                 </div>
@@ -353,7 +352,6 @@ const ImovelForm = () => {
                   <Input
                     value={numero}
                     onChange={(e) => setNumero(e.target.value)}
-                    placeholder="123"
                   />
                 </div>
               </div>
@@ -364,7 +362,6 @@ const ImovelForm = () => {
                   <Input
                     value={bairro}
                     onChange={(e) => setBairro(e.target.value)}
-                    placeholder="Centro"
                     required
                   />
                 </div>
@@ -374,7 +371,6 @@ const ImovelForm = () => {
                   <Input
                     value={complemento}
                     onChange={(e) => setComplemento(e.target.value)}
-                    placeholder="Bloco B"
                   />
                 </div>
               </div>
@@ -403,7 +399,6 @@ const ImovelForm = () => {
                   <Input
                     value={cep}
                     onChange={(e) => setCep(e.target.value)}
-                    placeholder="97760-000"
                   />
                 </div>
               </div>
