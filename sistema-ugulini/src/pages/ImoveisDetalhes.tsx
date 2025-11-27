@@ -163,27 +163,30 @@ const ImoveisDetalhes = () => {
               <Card>
                 <CardContent className="p-6">
                   {Imoveis.fotos && Imoveis.fotos.length > 0 ? (
-  <Carousel className="w-full">
-    <CarouselContent>
-      {Imoveis.fotos.map((foto, index) => (
-        <CarouselItem key={index} className="flex justify-center">
-          <img
-            src={`${API_URL}${foto.path_foto}`}
-            alt={`Foto ${index + 1}`}
-            className="w-full h-[400px] md:h-[500px] object-cover rounded-lg"
-          />
-        </CarouselItem>
-      ))}
-    </CarouselContent>
+                    <Carousel className="w-full">
+                      <CarouselContent>
+                        {Imoveis.fotos.map((foto, index) => (
+                          <CarouselItem
+                            key={index}
+                            className="flex justify-center"
+                          >
+                            <img
+                              src={`${API_URL}${foto.path_foto}`}
+                              alt={`Foto ${index + 1}`}
+                              className="w-full h-[400px] md:h-[500px] object-cover rounded-lg"
+                            />
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
 
-    <CarouselPrevious />
-    <CarouselNext />
-  </Carousel>
-) : (
-  <div className="aspect-video bg-muted flex items-center justify-center rounded-lg">
-    <Home className="w-16 h-16" />
-  </div>
-)}
+                      <CarouselPrevious />
+                      <CarouselNext />
+                    </Carousel>
+                  ) : (
+                    <div className="aspect-video bg-muted flex items-center justify-center rounded-lg">
+                      <Home className="w-16 h-16" />
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
