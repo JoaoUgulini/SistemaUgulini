@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model usuario {
+  id             BigInt   @id @default(autoincrement())
+  nome_sobrenome String   @db.VarChar(255)
+  cpf            String   @db.VarChar(255)
+  senha          String   @db.VarChar(255)
+  admin          Boolean? @default(false)
+
+  @@map("usuario")
+}
+
+model endereco {
+  id          BigInt   @id @default(autoincrement())
+  cep         String?  @db.VarChar(8)
+  logradouro  String?  @db.VarChar(255)
+  numero      String?  @db.VarChar(10)
+  complemento String?  @db.VarChar(255)
+  bairro      String?  @db.VarChar(100)
+  cidade      String?  @db.VarChar(100)
+  estado      String?  @db.Char(2)
+  imoveis     imovel[]
+
+  @@map("endereco")
+}
+
+model imovel {
+  id             BigInt         @id @default(autoincrement())
+  valor          Decimal?       @db.Decimal(12, 2)
+  nome_sobrenome String
+  telefone       String?        @db.VarChar(15)
+  tipo           String?        @db.VarChar(55)
+  finalidade     String?        @db.VarChar(55)
+  status_imovel  String?        @db.VarChar(55)
+  medida_frente  Decimal?       @db.Decimal(10, 2)
+  medida_lateral Decimal?       @db.Decimal(10, 2)
+  area_total     Decimal?       @db.Decimal(10, 2)
+  quartos        Int?
+  banheiros      Int?
+  vagas_garagem  Int?
+  descricao      String?        @db.Text
+  data_cadastro  DateTime?      @db.Date
+  id_endereco    BigInt
+  fotos          fotos_imovel[]
+  endereco       endereco       @relation(fields: [id_endereco], references: [id])
+
+  @@index([id_endereco], map: "imovel_id_endereco_fkey")
+  @@map("imovel")
+}
+
+model fotos_imovel {
+  id        BigInt  @id @default(autoincrement())
+  path_foto String? @db.VarChar(255)
+  id_imovel BigInt
+  imovel    imovel  @relation(fields: [id_imovel], references: [id], onDelete: Cascade)
+
+  @@index([id_imovel], map: "fotos_imovel_id_imovel_fkey")
+  @@map("fotos_imovel")
+}
