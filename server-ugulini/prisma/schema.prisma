@@ -55,7 +55,7 @@ model imovel {
   @@map("imovel")
 }
 
-model fotos_imovel {
+model fotos {
   id        BigInt  @id @default(autoincrement())
   path_foto String? @db.VarChar(255)
   id_imovel BigInt

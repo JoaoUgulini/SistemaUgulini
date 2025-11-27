@@ -67,7 +67,7 @@ module.exports = {
       });
 
       if (files.length > 0) {
-        await prisma.fotos_imovel.createMany({
+        await prisma.fotos.createMany({
           data: files.map((f) => ({
             id_imovel: imovel.id,
             path_foto: `/uploads/${f.filename}`,
@@ -128,7 +128,7 @@ module.exports = {
       });
 
       if (files.length > 0) {
-        await prisma.fotos_imovel.createMany({
+        await prisma.fotos.createMany({
           data: files.map((f) => ({
             id_imovel: BigInt(id),
             path_foto: `/uploads/${f.filename}`,
