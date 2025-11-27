@@ -49,23 +49,27 @@ module.exports = {
       });
 
       const imovel = await prisma.imovel.create({
-        data: {
-          valor: new Prisma.Decimal(data.valor),
-          nome_sobrenome_prop: data.nome_sobrenome,
-          telefone_prop: data.telefone,
-          tipo: data.tipo,
-          finalidade: data.finalidade,
-          status_imovel: data.status_imovel || "Disponível",
-          medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
-          medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
-          area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
-          quartos: Number(data.quartos) || 0,
-          banheiros: Number(data.banheiros) || 0,
-          vagas_garagem: Number(data.vagas_garagem) || 0,
-          descricao: data.descricao || null,
-          id_endereco: endereco.id,
-        },
-      });
+  data: {
+    valor: new Prisma.Decimal(data.valor),
+
+    // CORRETO
+    nome_sobrenome_prop: data.nome_sobrenome,
+    telefone_prop: data.telefone,
+
+    tipo: data.tipo,
+    finalidade: data.finalidade,
+    status_imovel: data.status_imovel || "Disponível",
+    medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
+    medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
+    area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
+    quartos: Number(data.quartos) || 0,
+    banheiros: Number(data.banheiros) || 0,
+    vagas_garagem: Number(data.vagas_garagem) || 0,
+    descricao: data.descricao || null,
+    id_endereco: endereco.id,
+  },
+});
+
 
       if (files.length > 0) {
         await prisma.fotos_imovel.createMany({
@@ -109,23 +113,26 @@ module.exports = {
       });
 
       await prisma.imovel.update({
-        where: { id: BigInt(id) },
-        data: {
-          valor: new Prisma.Decimal(data.valor),
-          nome_sobrenome: data.nome_sobrenome,
-          telefone: data.telefone,
-          tipo: data.tipo,
-          finalidade: data.finalidade,
-          status_imovel: data.status_imovel,
-          medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
-          medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
-          area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
-          quartos: Number(data.quartos),
-          banheiros: Number(data.banheiros),
-          vagas_garagem: Number(data.vagas_garagem),
-          descricao: data.descricao,
-        },
-      });
+  where: { id: BigInt(id) },
+  data: {
+    valor: new Prisma.Decimal(data.valor),
+
+    nome_sobrenome_prop: data.nome_sobrenome,
+    telefone_prop: data.telefone,
+
+    tipo: data.tipo,
+    finalidade: data.finalidade,
+    status_imovel: data.status_imovel,
+    medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
+    medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
+    area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
+    quartos: Number(data.quartos),
+    banheiros: Number(data.banheiros),
+    vagas_garagem: Number(data.vagas_garagem),
+    descricao: data.descricao,
+  },
+});
+
 
       if (files.length > 0) {
         await prisma.fotos_imovel.createMany({
