@@ -20,5 +20,20 @@ router.get("/testdb", async (req, res) => {
   }
 });
 
+router.get("/resetarSenha", async (req, res) => {
+  try {
+    const hash = "$2a$10$xysPA0cdf.NC11FL8coQTOFnPE.N65f.hvIjpzKfUFRq4YYeCob16";
+
+    await prisma.usuario.update({
+      where: { cpf: "03032541069" },
+      data: { senha: hash }
+    });
+
+    res.send("Senha resetada com sucesso!");
+  } catch (err) {
+    res.status(500).send("Erro: " + err.message);
+  }
+});
+
 
 module.exports = router;
