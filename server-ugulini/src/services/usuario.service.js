@@ -24,7 +24,7 @@ module.exports = {
         {
           id: user.id,
           nome: user.nome_sobrenome,
-          admin: user.admin,
+          admim: user.admim,
         },
         process.env.JWT_SECRET,
         { expiresIn: "8h" }
@@ -36,7 +36,7 @@ module.exports = {
         user: {
           id: user.id,
           nome: user.nome_sobrenome,
-          admin: user.admin,
+          admim: user.admim,
         },
       };
     } catch (error) {
