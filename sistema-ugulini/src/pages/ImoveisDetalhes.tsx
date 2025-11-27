@@ -40,8 +40,8 @@ interface Imoveis {
   banheiros?: number | null;
   vagas_garagem?: number | null;
   descricao?: string | null;
-  nome_sobrenome?: string | null;
-  telefone?: string | null;
+  nome_sobrenome_prop?: string | null;
+  telefone_prop?: string | null;
   endereco?: {
     logradouro?: string | null;
     numero?: string | null;
@@ -244,7 +244,7 @@ const ImoveisDetalhes = () => {
                             Proprietário
                           </span>
                           <span className="font-semibold">
-                            {Imoveis.nome_sobrenome}
+                            {Imoveis.nome_sobrenome_prop}
                           </span>
                         </div>
 
@@ -253,8 +253,8 @@ const ImoveisDetalhes = () => {
                             Telefone
                           </span>
                           <span className="font-semibold">
-                            {Imoveis.telefone
-                              ? Imoveis.telefone
+                            {Imoveis.telefone_prop
+                              ? Imoveis.telefone_prop
                               : "Sem telefone"}
                           </span>
                         </div>
