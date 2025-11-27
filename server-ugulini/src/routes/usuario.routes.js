@@ -7,8 +7,7 @@ const prisma = new PrismaClient();
 
 router.get("/alterarTabela", async (req, res) => {
   try {
-    await prisma.$executeRawUnsafe(`ALTER TABLE imovel DROP COLUMN valor_aluguel`);
-    await prisma.$executeRawUnsafe(`ALTER TABLE imovel CHANGE COLUMN valor_venda venda DECIMAL(10,2)`);
+    await prisma.$executeRawUnsafe(`ALTER TABLE imovel CHANGE COLUMN venda valor DECIMAL(10,2)`);
 
     res.send("Tabela imovel atualizada com sucesso!");
   } catch (err) {
