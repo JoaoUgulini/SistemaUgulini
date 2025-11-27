@@ -1,10 +1,7 @@
-// src/services/imovel.service.js
-const { PrismaClient } = require("@prisma/client");
-const { Prisma } = require("@prisma/client");
+const { PrismaClient, Prisma } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports = {
-
   async list() {
     try {
       return await prisma.imovel.findMany({
@@ -49,27 +46,25 @@ module.exports = {
       });
 
       const imovel = await prisma.imovel.create({
-  data: {
-    valor: new Prisma.Decimal(data.valor),
+        data: {
+          valor: new Prisma.Decimal(data.valor),
 
-    // CORRETO
-    nome_sobrenome_prop: data.nome_sobrenome,
-    telefone_prop: data.telefone,
+          nome_sobrenome_prop: data.nome_sobrenome,
+          telefone_prop: data.telefone,
 
-    tipo: data.tipo,
-    finalidade: data.finalidade,
-    status_imovel: data.status_imovel || "Disponível",
-    medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
-    medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
-    area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
-    quartos: Number(data.quartos) || 0,
-    banheiros: Number(data.banheiros) || 0,
-    vagas_garagem: Number(data.vagas_garagem) || 0,
-    descricao: data.descricao || null,
-    id_endereco: endereco.id,
-  },
-});
-
+          tipo: data.tipo,
+          finalidade: data.finalidade,
+          status_imovel: data.status_imovel || "Disponível",
+          medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
+          medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
+          area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
+          quartos: Number(data.quartos) || 0,
+          banheiros: Number(data.banheiros) || 0,
+          vagas_garagem: Number(data.vagas_garagem) || 0,
+          descricao: data.descricao || null,
+          id_endereco: endereco.id,
+        },
+      });
 
       if (files.length > 0) {
         await prisma.fotos_imovel.createMany({
@@ -84,7 +79,6 @@ module.exports = {
         where: { id: imovel.id },
         include: { endereco: true, fotos: true },
       });
-
     } catch (error) {
       console.error("Erro no service.create:", error);
       throw error;
@@ -113,26 +107,25 @@ module.exports = {
       });
 
       await prisma.imovel.update({
-  where: { id: BigInt(id) },
-  data: {
-    valor: new Prisma.Decimal(data.valor),
+        where: { id: BigInt(id) },
+        data: {
+          valor: new Prisma.Decimal(data.valor),
 
-    nome_sobrenome_prop: data.nome_sobrenome,
-    telefone_prop: data.telefone,
+          nome_sobrenome_prop: data.nome_sobrenome,
+          telefone_prop: data.telefone,
 
-    tipo: data.tipo,
-    finalidade: data.finalidade,
-    status_imovel: data.status_imovel,
-    medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
-    medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
-    area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
-    quartos: Number(data.quartos),
-    banheiros: Number(data.banheiros),
-    vagas_garagem: Number(data.vagas_garagem),
-    descricao: data.descricao,
-  },
-});
-
+          tipo: data.tipo,
+          finalidade: data.finalidade,
+          status_imovel: data.status_imovel,
+          medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
+          medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
+          area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
+          quartos: Number(data.quartos),
+          banheiros: Number(data.banheiros),
+          vagas_garagem: Number(data.vagas_garagem),
+          descricao: data.descricao,
+        },
+      });
 
       if (files.length > 0) {
         await prisma.fotos_imovel.createMany({
@@ -147,14 +140,11 @@ module.exports = {
         where: { id: BigInt(id) },
         include: { endereco: true, fotos: true },
       });
-
     } catch (error) {
       console.error("Erro no service.update:", error);
       throw error;
     }
   },
-
-  
 
   async filter(f) {
     const where = { AND: [] };
@@ -164,21 +154,13 @@ module.exports = {
 
     if (isValid(f.cidade)) {
       where.AND.push({
-        endereco: {
-          is: {
-            cidade: f.cidade,
-          },
-        },
+        endereco: { is: { cidade: f.cidade } },
       });
     }
 
     if (isValid(f.bairro)) {
       where.AND.push({
-        endereco: {
-          is: {
-            bairro: f.bairro,
-          },
-        },
+        endereco: { is: { bairro: f.bairro } },
       });
     }
 
@@ -252,16 +234,8 @@ module.exports = {
       select: { bairro: true },
       where: {
         AND: [
-          {
-            cidade: {
-              equals: cidade,
-            },
-          },
-          {
-            bairro: {
-              not: null,
-            },
-          },
+          { cidade: { equals: cidade } },
+          { bairro: { not: null } },
         ],
       },
     });
