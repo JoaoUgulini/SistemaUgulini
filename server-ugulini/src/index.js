@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const PORT = process.env.PORT || 3001;
 
 require("./middlewares/bigint.js");
 require("dotenv").config();
@@ -20,4 +21,6 @@ app.use("/contato", contatoRoutes);
 app.use("/usuario", usuarioRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
-app.listen(3001, () => console.log("Server running on port 3001"));
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
