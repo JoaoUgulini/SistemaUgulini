@@ -12,7 +12,7 @@ model usuario {
   nome_sobrenome String   @db.VarChar(255)
   cpf            String   @db.VarChar(255)
   senha          String   @db.VarChar(255)
-  admin          Boolean? @default(false)
+  admim          Boolean? @default(false)
 
   @@map("usuario")
 }
