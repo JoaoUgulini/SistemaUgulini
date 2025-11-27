@@ -274,12 +274,8 @@ const ImovelForm = () => {
               <CardTitle>Características</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <div className="space-y-2">
-                  <Label>Área Total (m²)</Label>
-                  <Input value={totalArea} readOnly className="bg-muted" />
-                </div>
-
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            
                 <div className="space-y-2">
                   <Label>Quartos</Label>
                   <Input
@@ -308,7 +304,7 @@ const ImovelForm = () => {
                 </div>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
                   <Label>Medida Frente (m)</Label>
                   <Input
@@ -327,6 +323,10 @@ const ImovelForm = () => {
                     value={medidaLateral}
                     onChange={handlemedidaLateral}
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label>Área Total (m²)</Label>
+                  <Input value={totalArea} readOnly className="bg-muted" />
                 </div>
               </div>
             </CardContent>
