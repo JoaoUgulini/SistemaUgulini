@@ -1,5 +1,8 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
 const prisma = new PrismaClient();
+const r2 = require("../config/r2");
+const { PutObjectCommand } = require("@aws-sdk/client-s3");
+
 
 module.exports = {
   async list() {
@@ -66,14 +69,30 @@ module.exports = {
         },
       });
 
-      if (files.length > 0) {
-        await prisma.fotos.createMany({
-          data: files.map((f) => ({
-            id_imovel: imovel.id,
-            path_foto: `/uploads/${f.filename}`,
-          })),
-        });
-      }
+      if (files && files.length > 0) {
+  const fotosURLs = [];
+
+  for (const file of files) {
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}-${file.originalname.replace(/\s+/g, "-")}`;
+
+    await r2.send(new PutObjectCommand({
+      Bucket: process.env.CF_R2_BUCKET,
+      Key: fileName,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    }));
+
+    const publicUrl = `${process.env.CF_R2_PUBLIC_URL}/${fileName}`;
+    fotosURLs.push(publicUrl);
+  }
+
+  await prisma.fotos.createMany({
+    data: fotosURLs.map((url) => ({
+      id_imovel: imovel.id,
+      path_foto: url,
+    })),
+  });
+}
 
       return await prisma.imovel.findUnique({
         where: { id: imovel.id },
@@ -127,14 +146,30 @@ module.exports = {
         },
       });
 
-      if (files.length > 0) {
-        await prisma.fotos.createMany({
-          data: files.map((f) => ({
-            id_imovel: BigInt(id),
-            path_foto: `/uploads/${f.filename}`,
-          })),
-        });
-      }
+      if (files && files.length > 0) {
+  const fotosURLs = [];
+
+  for (const file of files) {
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}-${file.originalname.replace(/\s+/g, "-")}`;
+
+    await r2.send(new PutObjectCommand({
+      Bucket: process.env.CF_R2_BUCKET,
+      Key: fileName,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    }));
+
+    const publicUrl = `${process.env.CF_R2_PUBLIC_URL}/${fileName}`;
+    fotosURLs.push(publicUrl);
+  }
+
+  await prisma.fotos.createMany({
+    data: fotosURLs.map((url) => ({
+      id_imovel: BigInt(id),
+      path_foto: url,
+    })),
+  });
+}
 
       return await prisma.imovel.findUnique({
         where: { id: BigInt(id) },
