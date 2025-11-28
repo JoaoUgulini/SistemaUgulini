@@ -93,11 +93,12 @@ const ImoveisList = () => {
                 <img
                   src={
                     property.fotos?.[0]?.path_foto
-                      ? `${API_URL}${property.fotos[0].path_foto}`
+                      ? property.fotos[0].path_foto
                       : "/placeholder.jpg"
                   }
-                  alt={property.descricao}
-                  className="h-full w-full object-cover"
+                  }
+                alt={property.descricao}
+                className="h-full w-full object-cover"
                 />
 
                 <Badge className="absolute top-3 right-3">
@@ -153,4 +154,3 @@ const ImoveisList = () => {
 };
 
 export default ImoveisList;
-  

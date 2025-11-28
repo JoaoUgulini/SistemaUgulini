@@ -122,7 +122,6 @@ const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
           <div className="max-w-2xl mx-auto bg-card/95 backdrop-blur rounded-lg p-4 shadow-lg">
             <div className="flex flex-col md:flex-row gap-3 text-black">
 
-  {/* CIDADE */}
 <Select onValueChange={setCidadeSelecionada}>
   <SelectTrigger className="flex-1 bg-white">
     <SelectValue placeholder="Selecione a cidade" />
@@ -136,7 +135,6 @@ const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
   </SelectContent>
 </Select>
 
-{/* BAIRRO */}
 <Select
   disabled={!cidadeSelecionada}
   onValueChange={setBairroSelecionado}
@@ -153,7 +151,6 @@ const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
   </SelectContent>
 </Select>
 
-  {/* BOTÃO BUSCAR */}
   <Button onClick={buscar} size="lg" className="px-8">
     <Search className="mr-2 h-4 w-4" />
     Buscar

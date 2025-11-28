@@ -38,7 +38,7 @@ const PropertyCard = ({
       <Card className="overflow-hidden transition-smooth hover:shadow-warm group cursor-pointer hover-lift hover:ring-1 hover:ring-primary/10">
         <div className="relative h-48 overflow-hidden">
           <img
-            src={`${API_URL}${image}`}
+            src={image}
             alt={titulo}
             className="h-full w-full object-cover transition-smooth group-hover:scale-110"
           />
