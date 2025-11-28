@@ -1,4 +1,4 @@
-// src/lib/loadGoogleMaps.ts
+
 export function loadGoogleMaps(): Promise<void> {
   return new Promise((resolve, reject) => {
     if (typeof window === "undefined") return resolve();
@@ -7,19 +7,19 @@ export function loadGoogleMaps(): Promise<void> {
       return resolve();
     }
 
-    const existing = document.querySelector<HTMLScriptElement>(
+    const existe = document.querySelector<HTMLScriptElement>(
       'script[data-google-maps="true"]'
     );
-    if (existing) {
-      existing.addEventListener("load", () => resolve());
-      existing.addEventListener("error", () => reject());
+    if (existe) {
+      existe.addEventListener("load", () => resolve());
+      existe.addEventListener("error", () => reject());
       return;
     }
 
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
     if (!apiKey) {
       console.error("VITE_GOOGLE_MAPS_API_KEY não encontrada.");
-      reject(new Error("Missing Google Maps API key"));
+      reject(new Error("Falta Google Maps API key"));
       return;
     }
 

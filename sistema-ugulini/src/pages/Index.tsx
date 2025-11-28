@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import heroBg from "@/assets/hero-bg.jpeg";
 import { api } from "@/services/api";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Imovel {
   id: number;
@@ -43,9 +45,10 @@ const Index = () => {
   const [featured, setFeatured] = useState<Imovel[]>([]);
   const [loading, setLoading] = useState(true);
   const [cidades, setCidades] = useState<{ cidade: string }[]>([]);
-const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
+  const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
   const [cidadeSelecionada, setCidadeSelecionada] = useState("");
   const [bairroSelecionado, setBairroSelecionado] = useState("");
+  const router = useRouter();
 
   const formataValor = (value: number) => {
     return new Intl.NumberFormat("pt-BR", {
@@ -55,29 +58,30 @@ const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
   };
 
   const buscar = () => {
-  const params = new URLSearchParams();
+    const params = new URLSearchParams();
+    
 
-  if (cidadeSelecionada) params.append("cidade", cidadeSelecionada);
-  if (bairroSelecionado) params.append("bairro", bairroSelecionado);
+    if (cidadeSelecionada) params.append("cidade", cidadeSelecionada);
+    if (bairroSelecionado) params.append("bairro", bairroSelecionado);
 
-  window.location.href = `/imoveis?${params.toString()}`;
-};
+    router.push(`/imoveis?${params.toString()}`);
+  };
 
   useEffect(() => {
-  api.get("/imoveis/cidades").then((res) => {
-    console.log("RETORNO DAS CIDADES:", res.data);
-    {console.log("TIPO CIDADES:", cidades)}
-    setCidades(res.data);
-  });
-}, []);
-
+    api.get("/imoveis/cidades").then((res) => {
+      console.log("RETORNO DAS CIDADES:", res.data);
+      {
+        console.log("TIPO CIDADES:", cidades);
+      }
+      setCidades(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     if (!cidadeSelecionada) {
       setBairros([]);
       return;
     }
-
 
     api.get(`/imoveis/bairros?cidade=${cidadeSelecionada}`).then((res) => {
       setBairros(res.data || []);
@@ -121,42 +125,40 @@ const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
 
           <div className="max-w-2xl mx-auto bg-card/95 backdrop-blur rounded-lg p-4 shadow-lg">
             <div className="flex flex-col md:flex-row gap-3 text-black">
+              <Select onValueChange={setCidadeSelecionada}>
+                <SelectTrigger className="flex-1 bg-white">
+                  <SelectValue placeholder="Selecione a cidade" />
+                </SelectTrigger>
+                <SelectContent>
+                  {cidades.map((item) => (
+                    <SelectItem key={item.cidade} value={item.cidade}>
+                      {item.cidade}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-<Select onValueChange={setCidadeSelecionada}>
-  <SelectTrigger className="flex-1 bg-white">
-    <SelectValue placeholder="Selecione a cidade" />
-  </SelectTrigger>
-  <SelectContent>
-    {cidades.map((item) => (
-      <SelectItem key={item.cidade} value={item.cidade}>
-        {item.cidade}
-      </SelectItem>
-    ))}
-  </SelectContent>
-</Select>
+              <Select
+                disabled={!cidadeSelecionada}
+                onValueChange={setBairroSelecionado}
+              >
+                <SelectTrigger className="flex-1 bg-white">
+                  <SelectValue placeholder="Selecione o bairro" />
+                </SelectTrigger>
+                <SelectContent>
+                  {bairros.map((item) => (
+                    <SelectItem key={item.bairro} value={item.bairro}>
+                      {item.bairro}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-<Select
-  disabled={!cidadeSelecionada}
-  onValueChange={setBairroSelecionado}
->
-  <SelectTrigger className="flex-1 bg-white">
-    <SelectValue placeholder="Selecione o bairro" />
-  </SelectTrigger>
-  <SelectContent>
-    {bairros.map((item) => (
-      <SelectItem key={item.bairro} value={item.bairro}>
-        {item.bairro}
-      </SelectItem>
-    ))}
-  </SelectContent>
-</Select>
-
-  <Button onClick={buscar} size="lg" className="px-8">
-    <Search className="mr-2 h-4 w-4" />
-    Buscar
-  </Button>
-
-</div>
+              <Button onClick={buscar} size="lg" className="px-8">
+                <Search className="mr-2 h-4 w-4" />
+                Buscar
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -172,10 +174,10 @@ const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
             </div>
 
             <Button variant="outline" asChild className="hidden md:flex">
-              <a href="/imoveis">
-                Ver Todos
+              <Link href="/imoveis">
+                Ver Todos Ver Todos
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+              </Link>
             </Button>
           </div>
 
@@ -271,10 +273,10 @@ const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <a href="/imoveis">Ver Imóveis</a>
+              <Link href="/imoveis"> Ver Todos Imoveis</Link>
             </Button>
             <Button size="lg" variant="secondary" asChild>
-              <a href="/contato">Falar com Corretor</a>
+              <Link href="/contato">Falar com Corretor</Link>
             </Button>
           </div>
         </div>

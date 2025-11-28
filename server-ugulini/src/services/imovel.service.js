@@ -52,7 +52,6 @@ module.exports = {
   // ===============================
   async create(data, files = []) {
     try {
-      // 1️⃣ Criar endereço
       const endereco = await prisma.endereco.create({
         data: {
           cep: data.cep || null,
@@ -76,9 +75,15 @@ module.exports = {
           finalidade: data.finalidade,
           status_imovel: data.status_imovel || "Disponível",
 
-          medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
-          medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
-          area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
+          medida_frente: data.medida_frente
+            ? new Prisma.Decimal(data.medida_frente)
+            : null,
+          medida_lateral: data.medida_lateral
+            ? new Prisma.Decimal(data.medida_lateral)
+            : null,
+          area_total: data.area_total
+            ? new Prisma.Decimal(data.area_total)
+            : null,
 
           quartos: data.quartos ? Number(data.quartos) : null,
           banheiros: data.banheiros ? Number(data.banheiros) : null,
@@ -91,34 +96,33 @@ module.exports = {
       });
 
       if (files && files.length > 0) {
-  const uploads = [];
+        const uploads = [];
 
-  for (const file of files) {
-    const nomeArquivo = gerarNomeArquivo(file.originalname);
+        for (const file of files) {
+          const nomeArquivo = gerarNomeArquivo(file.originalname);
 
-    await r2.send(
-      new PutObjectCommand({
-        Bucket: process.env.CF_R2_BUCKET,
-        Key: nomeArquivo,
-        Body: file.buffer,
-        ContentType: file.mimetype,
-      })
-    );
+          await r2.send(
+            new PutObjectCommand({
+              Bucket: process.env.CF_R2_BUCKET,
+              Key: nomeArquivo,
+              Body: file.buffer,
+              ContentType: file.mimetype,
+            })
+          );
 
-    uploads.push({
-      id_imovel: imovel.id,
-      path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
-    });
-  }
+          uploads.push({
+            id_imovel: imovel.id,
+            path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
+          });
+        }
 
-  await prisma.fotos.createMany({ data: uploads });
-}
+        await prisma.fotos.createMany({ data: uploads });
+      }
 
       return await prisma.imovel.findUnique({
         where: { id: imovel.id },
         include: { endereco: true, fotos: true },
       });
-
     } catch (error) {
       console.error("Erro no service.create:", error);
       throw error;
@@ -161,9 +165,15 @@ module.exports = {
           finalidade: data.finalidade,
           status_imovel: data.status_imovel,
 
-          medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
-          medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
-          area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
+          medida_frente: data.medida_frente
+            ? new Prisma.Decimal(data.medida_frente)
+            : null,
+          medida_lateral: data.medida_lateral
+            ? new Prisma.Decimal(data.medida_lateral)
+            : null,
+          area_total: data.area_total
+            ? new Prisma.Decimal(data.area_total)
+            : null,
 
           quartos: data.quartos ? Number(data.quartos) : null,
           banheiros: data.banheiros ? Number(data.banheiros) : null,
@@ -174,35 +184,33 @@ module.exports = {
       });
 
       if (files && files.length > 0) {
-  const uploads = [];
+        const uploads = [];
 
-  for (const file of files) {
-    const nomeArquivo = gerarNomeArquivo(file.originalname);
+        for (const file of files) {
+          const nomeArquivo = gerarNomeArquivo(file.originalname);
 
-    await r2.send(
-      new PutObjectCommand({
-        Bucket: process.env.CF_R2_BUCKET,
-        Key: nomeArquivo,
-        Body: file.buffer,
-        ContentType: file.mimetype,
-      })
-    );
+          await r2.send(
+            new PutObjectCommand({
+              Bucket: process.env.CF_R2_BUCKET,
+              Key: nomeArquivo,
+              Body: file.buffer,
+              ContentType: file.mimetype,
+            })
+          );
 
-    uploads.push({
-      id_imovel: BigInt(id),
-      path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
-    });
-  }
+          uploads.push({
+            id_imovel: BigInt(id),
+            path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
+          });
+        }
 
-  await prisma.fotos.createMany({ data: uploads });
-}
+        await prisma.fotos.createMany({ data: uploads });
+      }
 
-      // 4️⃣ Retornar imóvel atualizado
       return await prisma.imovel.findUnique({
         where: { id: BigInt(id) },
         include: { endereco: true, fotos: true },
       });
-
     } catch (error) {
       console.error("Erro no service.update:", error);
       throw error;
@@ -292,10 +300,7 @@ module.exports = {
       distinct: ["bairro"],
       select: { bairro: true },
       where: {
-        AND: [
-          { cidade: { equals: cidade } },
-          { bairro: { not: null } },
-        ],
+        AND: [{ cidade: { equals: cidade } }, { bairro: { not: null } }],
       },
     });
   },

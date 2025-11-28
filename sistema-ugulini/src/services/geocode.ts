@@ -1,4 +1,4 @@
-// src/services/geocode.ts
+
 import axios from "axios";
 
 const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -6,7 +6,7 @@ const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 export async function geocodeEndereco(enderecoCompleto: string): Promise<{ lat: number; lng: number } | null> {
   try {
     if (!GOOGLE_KEY) {
-      console.error("Google API key missing");
+      console.error("Google API key faltando.");
       return null;
     }
 
@@ -26,7 +26,7 @@ export async function geocodeEndereco(enderecoCompleto: string): Promise<{ lat: 
     const loc = data.results[0].geometry.location;
     return { lat: loc.lat, lng: loc.lng };
   } catch (err) {
-    console.error("Erro no geocodeAddress:", err);
+    console.error("Erro no geocodeEndereco:", err);
     return null;
   }
 }
