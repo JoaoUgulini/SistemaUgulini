@@ -75,9 +75,7 @@ const ImoveisList = () => {
           <div>
             <h1 className="text-3xl font-bold mb-2">Gerenciar Imóveis</h1>
             <p className="text-muted-foreground">
-              {loading
-                ? "Carregando..."
-                : `${imoveis.length} imóveis cadastrados`}
+              {loading ? "Carregando..." : `${imoveis.length} imóveis cadastrados`}
             </p>
           </div>
 
@@ -98,8 +96,9 @@ const ImoveisList = () => {
                       ? property.fotos[0].path_foto
                       : "/placeholder.jpg"
                   }
-                  alt={property.descricao}
-                  className="h-full w-full object-cover"
+                  }
+                alt={property.descricao}
+                className="h-full w-full object-cover"
                 />
 
                 <Badge className="absolute top-3 right-3">
@@ -122,32 +121,20 @@ const ImoveisList = () => {
 
                 <div className="flex items-center gap-2 pt-2 border-t border-border">
                   <Badge
-                    variant={
-                      property.finalidade === "Venda" ? "default" : "secondary"
-                    }
+                    variant={property.finalidade === "Venda" ? "default" : "secondary"}
                   >
                     {property.finalidade}
                   </Badge>
                 </div>
 
                 <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    asChild
-                  >
+                  <Button variant="outline" size="sm" className="flex-1" asChild>
                     <Link to={`/imoveis/${property.id}`}>
                       <Eye className="mr-1 h-3 w-3" />
                       Ver
                     </Link>
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    asChild
-                  >
+                  <Button variant="outline" size="sm" className="flex-1" asChild>
                     <Link to={`/admin/imoveis/${property.id}/editar`}>
                       <Edit className="mr-1 h-3 w-3" />
                       Editar
