@@ -20,8 +20,6 @@ import {
 } from "@/components/ui/select";
 import heroBg from "@/assets/hero-bg.jpeg";
 import { api } from "@/services/api";
-import Link from "next/link";
-import { useRouter } from "next/router";
 
 interface Imovel {
   id: number;
@@ -48,7 +46,6 @@ const Index = () => {
   const [bairros, setBairros] = useState<{ bairro: string }[]>([]);
   const [cidadeSelecionada, setCidadeSelecionada] = useState("");
   const [bairroSelecionado, setBairroSelecionado] = useState("");
-  const router = useRouter();
 
   const formataValor = (value: number) => {
     return new Intl.NumberFormat("pt-BR", {
@@ -63,7 +60,7 @@ const Index = () => {
     if (cidadeSelecionada) params.append("cidade", cidadeSelecionada);
     if (bairroSelecionado) params.append("bairro", bairroSelecionado);
 
-    router.push(`/imoveis?${params.toString()}`);
+    window.location.href = `/imoveis?${params.toString()}`;
   };
 
   useEffect(() => {
@@ -173,10 +170,10 @@ const Index = () => {
             </div>
 
             <Button variant="outline" asChild className="hidden md:flex">
-              <Link href="/imoveis">
-                Ver Todos Ver Todos
+              <a href="/imoveis">
+                Ver Todos
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              </a>
             </Button>
           </div>
 
@@ -272,10 +269,10 @@ const Index = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/imoveis"> Ver Todos Imoveis</Link>
+              <a href="/imoveis">Ver Imóveis</a>
             </Button>
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/contato">Falar com Corretor</Link>
+              <a href="/contato">Falar com Corretor</a>
             </Button>
           </div>
         </div>
