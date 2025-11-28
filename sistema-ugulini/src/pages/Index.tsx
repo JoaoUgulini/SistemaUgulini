@@ -59,7 +59,6 @@ const Index = () => {
 
   const buscar = () => {
     const params = new URLSearchParams();
-    
 
     if (cidadeSelecionada) params.append("cidade", cidadeSelecionada);
     if (bairroSelecionado) params.append("bairro", bairroSelecionado);
