@@ -1,6 +1,15 @@
 // src/services/imovel.service.js
 const { PrismaClient, Prisma } = require("@prisma/client");
+const r2 = require("../config/r2");
+const { PutObjectCommand } = require("@aws-sdk/client-s3");
+const crypto = require("crypto");
 const prisma = new PrismaClient();
+
+function gerarNomeArquivo(originalname) {
+  const ext = originalname.split(".").pop();
+  const nome = crypto.randomBytes(16).toString("hex");
+  return `${nome}.${ext}`;
+}
 
 module.exports = {
   // ===============================
@@ -81,14 +90,29 @@ module.exports = {
         },
       });
 
-      if (files.length > 0) {
-        await prisma.fotos.createMany({
-          data: files.map((f) => ({
-            id_imovel: imovel.id,
-            path_foto: `/uploads/${f.filename}`,
-          })),
-        });
-      }
+      if (files && files.length > 0) {
+  const uploads = [];
+
+  for (const file of files) {
+    const nomeArquivo = gerarNomeArquivo(file.originalname);
+
+    await r2.send(
+      new PutObjectCommand({
+        Bucket: process.env.CF_R2_BUCKET,
+        Key: nomeArquivo,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+      })
+    );
+
+    uploads.push({
+      id_imovel: imovel.id,
+      path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
+    });
+  }
+
+  await prisma.fotos.createMany({ data: uploads });
+}
 
       return await prisma.imovel.findUnique({
         where: { id: imovel.id },
@@ -149,14 +173,29 @@ module.exports = {
         },
       });
 
-      if (files.length > 0) {
-        await prisma.fotos.createMany({
-          data: files.map((f) => ({
-            id_imovel: BigInt(id),
-            path_foto: `/uploads/${f.filename}`,
-          })),
-        });
-      }
+      if (files && files.length > 0) {
+  const uploads = [];
+
+  for (const file of files) {
+    const nomeArquivo = gerarNomeArquivo(file.originalname);
+
+    await r2.send(
+      new PutObjectCommand({
+        Bucket: process.env.CF_R2_BUCKET,
+        Key: nomeArquivo,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+      })
+    );
+
+    uploads.push({
+      id_imovel: BigInt(id),
+      path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
+    });
+  }
+
+  await prisma.fotos.createMany({ data: uploads });
+}
 
       // 4️⃣ Retornar imóvel atualizado
       return await prisma.imovel.findUnique({
