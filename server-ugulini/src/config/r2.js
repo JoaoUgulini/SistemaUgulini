@@ -1,10 +1,12 @@
-import admin from "firebase-admin";
-import serviceAccount from "../../serviceAccountKey.json" assert { type: "json" };
+const { S3Client } = require("@aws-sdk/client-s3");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: "SEU_BUCKET.appspot.com"
+const r2 = new S3Client({
+  region: "auto",
+  endpoint: process.env.CF_R2_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.CF_R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.CF_R2_SECRET_ACCESS_KEY,
+  },
 });
 
-const bucket = admin.storage().bucket();
-export default bucket;
+module.exports = r2;
