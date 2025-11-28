@@ -21,7 +21,7 @@ import {
 import heroBg from "@/assets/hero-bg.jpeg";
 import { api } from "@/services/api";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 interface Imovel {
   id: number;
