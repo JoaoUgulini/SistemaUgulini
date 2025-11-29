@@ -1,9 +1,10 @@
-
 import axios from "axios";
 
 const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-export async function geocodeEndereco(enderecoCompleto: string): Promise<{ lat: number; lng: number } | null> {
+export async function geocodeEndereco(
+  enderecoCompleto: string
+): Promise<{ lat: number; lng: number } | null> {
   try {
     if (!GOOGLE_KEY) {
       console.error("Google API key faltando.");

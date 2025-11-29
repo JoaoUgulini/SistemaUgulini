@@ -12,9 +12,6 @@ function gerarNomeArquivo(originalname) {
 }
 
 module.exports = {
-  // ===============================
-  // LISTAR TODOS
-  // ===============================
   async list() {
     try {
       return await prisma.imovel.findMany({
@@ -29,9 +26,6 @@ module.exports = {
     }
   },
 
-  // ===============================
-  // BUSCAR POR ID
-  // ===============================
   async getById(id) {
     try {
       return await prisma.imovel.findUnique({
@@ -47,9 +41,6 @@ module.exports = {
     }
   },
 
-  // ===============================
-  // CRIAR IMÓVEL
-  // ===============================
   async create(data, files = []) {
     try {
       const endereco = await prisma.endereco.create({
@@ -129,9 +120,6 @@ module.exports = {
     }
   },
 
-  // ===============================
-  // ATUALIZAR IMÓVEL
-  // ===============================
   async update(id, data, files = []) {
     try {
       const imovelExistente = await prisma.imovel.findUnique({
@@ -217,9 +205,6 @@ module.exports = {
     }
   },
 
-  // ===============================
-  // FILTRAR IMÓVEIS
-  // ===============================
   async filter(f) {
     const where = { AND: [] };
 
@@ -281,9 +266,6 @@ module.exports = {
     });
   },
 
-  // ===============================
-  // LISTAR CIDADES
-  // ===============================
   async getCidades() {
     return prisma.endereco.findMany({
       distinct: ["cidade"],
@@ -292,9 +274,6 @@ module.exports = {
     });
   },
 
-  // ===============================
-  // LISTAR BAIRROS
-  // ===============================
   async getBairros(cidade) {
     return prisma.endereco.findMany({
       distinct: ["bairro"],

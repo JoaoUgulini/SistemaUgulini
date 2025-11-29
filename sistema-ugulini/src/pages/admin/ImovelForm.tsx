@@ -275,7 +275,6 @@ const ImovelForm = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            
                 <div className="space-y-2">
                   <Label>Quartos</Label>
                   <Input
@@ -396,10 +395,7 @@ const ImovelForm = () => {
 
                 <div className="space-y-2">
                   <Label>CEP</Label>
-                  <Input
-                    value={cep}
-                    onChange={(e) => setCep(e.target.value)}
-                  />
+                  <Input value={cep} onChange={(e) => setCep(e.target.value)} />
                 </div>
               </div>
             </CardContent>

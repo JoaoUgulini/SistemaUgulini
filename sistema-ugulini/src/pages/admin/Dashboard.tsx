@@ -58,7 +58,8 @@ const Dashboard = () => {
                       </p>
 
                       <p className="text-sm text-muted-foreground">
-                        {imovel.endereco?.bairro}, {imovel.endereco?.cidade}/{imovel.endereco?.estado}
+                        {imovel.endereco?.bairro}, {imovel.endereco?.cidade}/
+                        {imovel.endereco?.estado}
                       </p>
 
                       <p className="text-xs text-muted-foreground">

@@ -11,12 +11,12 @@ const r2 = new S3Client({
       keepAlive: true,
       maxSockets: 50,
       minVersion: "TLSv1.2",
-    })
+    }),
   }),
   credentials: {
     accessKeyId: process.env.CF_R2_ACCESS_KEY_ID,
-    secretAccessKey: process.env.CF_R2_SECRET_ACCESS_KEY
-  }
+    secretAccessKey: process.env.CF_R2_SECRET_ACCESS_KEY,
+  },
 });
 
 module.exports = r2;

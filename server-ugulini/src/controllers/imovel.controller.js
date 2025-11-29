@@ -29,14 +29,13 @@ module.exports = {
         .json({ error: "Erro ao buscar imóvel", detalhe: error.message });
     }
   },
-    async create(req, res) {
+  async create(req, res) {
     try {
       const data = req.body;
       const files = req.files;
 
       const novo = await service.create(data, files);
       res.status(201).json(novo);
-
     } catch (error) {
       console.error("Erro no controller.create:", error);
       res.status(500).json({ error: "Erro ao criar imóvel" });
@@ -51,7 +50,6 @@ module.exports = {
 
       const atualizado = await service.update(id, data, files);
       res.json(atualizado);
-
     } catch (error) {
       console.error("Erro no controller.update:", error);
       res.status(500).json({ error: "Erro ao atualizar imóvel" });
@@ -59,37 +57,40 @@ module.exports = {
   },
 
   async filter(req, res) {
-  try {
-    const data = await service.filter(req.query);
-    res.json(data);
-  } catch (err) {
-    console.error("Erro no controller.filter:", err);
-    res.status(500).json({
-      error: "Erro ao filtrar imóveis",
-      details: err.message, 
-    });
-  }
-},
+    try {
+      const data = await service.filter(req.query);
+      res.json(data);
+    } catch (err) {
+      console.error("Erro no controller.filter:", err);
+      res.status(500).json({
+        error: "Erro ao filtrar imóveis",
+        details: err.message,
+      });
+    }
+  },
 
-async getCidades(req, res) {
-  try {
-    const cidades = await service.getCidades();
-    res.json(cidades);
-  } catch (err) {
-    console.error("Erro no controller.getCidades:", err);
-    res.status(500).json({ error: "Erro ao buscar cidades", detalhe: err.message });
-  }
-},
+  async getCidades(req, res) {
+    try {
+      const cidades = await service.getCidades();
+      res.json(cidades);
+    } catch (err) {
+      console.error("Erro no controller.getCidades:", err);
+      res
+        .status(500)
+        .json({ error: "Erro ao buscar cidades", detalhe: err.message });
+    }
+  },
 
-async getBairros(req, res) {
-  try {
-    const { cidade } = req.query;
-    const bairros = await service.getBairros(cidade);
-    res.json(bairros);
-  } catch (err) {
-    console.error("ERRO REAL getBairros:", err); // 👈 ISSO MOSTRARÁ O ERRO DE VERDADE
-    res.status(500).json({ error: "Erro ao buscar bairros", detalhe: err.message });
-  }
-}
-
+  async getBairros(req, res) {
+    try {
+      const { cidade } = req.query;
+      const bairros = await service.getBairros(cidade);
+      res.json(bairros);
+    } catch (err) {
+      console.error("ERRO REAL getBairros:", err);
+      res
+        .status(500)
+        .json({ error: "Erro ao buscar bairros", detalhe: err.message });
+    }
+  },
 };

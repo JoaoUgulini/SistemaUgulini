@@ -8,7 +8,6 @@ import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { enviarContato } from "@/services/contato";
 
-
 const Contact = () => {
   const { toast } = useToast();
 
@@ -20,9 +19,13 @@ const Contact = () => {
     const dados = {
       nome: (formulario.elements.namedItem("nome") as HTMLInputElement).value,
       email: (formulario.elements.namedItem("email") as HTMLInputElement).value,
-      telefone: (formulario.elements.namedItem("telefone") as HTMLInputElement).value,
-      assunto: (formulario.elements.namedItem("assunto") as HTMLInputElement).value,
-      mensagem: (formulario.elements.namedItem("mensagem") as HTMLTextAreaElement).value,
+      telefone: (formulario.elements.namedItem("telefone") as HTMLInputElement)
+        .value,
+      assunto: (formulario.elements.namedItem("assunto") as HTMLInputElement)
+        .value,
+      mensagem: (
+        formulario.elements.namedItem("mensagem") as HTMLTextAreaElement
+      ).value,
     };
 
     try {

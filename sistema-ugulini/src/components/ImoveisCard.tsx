@@ -30,7 +30,6 @@ const PropertyCard = ({
   vagas,
   area,
 }: PropertyCardProps) => {
-
   const API_URL = api.defaults.baseURL;
 
   return (
@@ -49,7 +48,9 @@ const PropertyCard = ({
 
         <div className="p-5 space-y-3">
           <div>
-            <h3 className="font-semibold text-lg mb-1 line-clamp-1">{titulo}</h3>
+            <h3 className="font-semibold text-lg mb-1 line-clamp-1">
+              {titulo}
+            </h3>
             <div className="flex items-center text-sm text-muted-foreground">
               <MapPin className="h-3 w-3 mr-1" />
               {localizacao}
