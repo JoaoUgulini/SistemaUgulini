@@ -26,7 +26,7 @@ router.get("/criarAdmin", async (req, res) => {
         nome_sobrenome: "Administrador do Sistema",
         cpf: cpf,
         senha: "$2a$10$I7/a67bGnokKsHzqVdGVteqqJOmFVsjf3ABrRppO7VyVUwfEYzzLG",
-        admin: true,
+        admim: true,
         data_cadastro: new Date()
       }
     });
