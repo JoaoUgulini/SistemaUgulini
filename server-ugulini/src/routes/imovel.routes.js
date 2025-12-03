@@ -4,7 +4,7 @@ const upload = require("../config/multer");
 
 const router = Router();
 
-router.get("/fix/remove-unique-fotos", async (req, res) => {
+router.get("/remove-unique-fotos", async (req, res) => {
   try {
     await prisma.$executeRawUnsafe(`
       ALTER TABLE fotos DROP INDEX fotos_imovel_id_imovel_fkey;
@@ -14,6 +14,16 @@ router.get("/fix/remove-unique-fotos", async (req, res) => {
   } catch (error) {
     console.error("Erro ao remover UNIQUE:", error);
     return res.status(500).json({ error: "Falha ao remover UNIQUE", detalhes: error });
+  }
+});
+
+router.get("/indexes", async (req, res) => {
+  try {
+    const indexes = await prisma.$queryRawUnsafe(`SHOW INDEXES FROM fotos;`);
+    return res.json(indexes);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json(error);
   }
 });
 
