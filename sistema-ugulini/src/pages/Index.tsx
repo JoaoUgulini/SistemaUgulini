@@ -171,12 +171,12 @@ const Index = () => {
               </p>
             </div>
 
-            <Button variant="outline" asChild className="hidden md:flex">
-              <a href="/imoveis">
-                Ver Todos
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
+            <Button variant="outline" asChild className="w-full">
+  <Link to="/imoveis">
+    Ver Todos os Imóveis
+    <ArrowRight className="ml-2 h-4 w-4" />
+  </Link>
+</Button>
           </div>
 
           {loading ? (

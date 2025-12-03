@@ -218,7 +218,7 @@ const ImovelForm = () => {
 
                 <div className="space-y-2">
                   <Label>Finalidade</Label>
-                  <Select value={finalidade} onValueChange={setFinalidade}>
+                  <Select value={finalidade} onValueChange={setFinalidade} required>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
@@ -270,6 +270,7 @@ const ImovelForm = () => {
                   value={descricao}
                   onChange={(e) => setDescricao(e.target.value)}
                   placeholder="Descrição completa..."
+                  required
                 />
               </div>
             </CardContent>
@@ -317,6 +318,7 @@ const ImovelForm = () => {
                     step="0.01"
                     value={medidaFrente}
                     onChange={handlemedidaFrente}
+                    required
                   />
                 </div>
 
@@ -327,6 +329,7 @@ const ImovelForm = () => {
                     step="0.01"
                     value={medidaLateral}
                     onChange={handlemedidaLateral}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
