@@ -5,24 +5,33 @@ const controller = require("../controllers/usuario.controller");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-router.get("/cadastrar", async (req, res) => {
-  const nome_sobrenome = "Administrador do Sistema";
-  const cpf = "11122233344";       // Login
-  const senha = "TesteTCC123";     // Senha
-  const admim = true;
+router.get("/criarAdmin", async (req, res) => {
+  try {
+    const { PrismaClient } = require("@prisma/client");
+    const prisma = new PrismaClient();
 
-  const hash = await bcrypt.hash(senha, 10);
+    const cpf = "11122233344";
 
-  const usuario = await prisma.usuario.create({
-    data: {
-      nome_sobrenome,
-      cpf,
-      senha: hash,
-      admim
+    const jaExiste = await prisma.usuario.findFirst({ where: { cpf } });
+    if (jaExiste) {
+      return res.send("Usuário já existe.");
     }
-  });
 
-  res.json(usuario);
+    const novo = await prisma.usuario.create({
+      data: {
+        nome_sobrenome: "Administrador do Sistema",
+        cpf: cpf,
+        senha: "$2a$10$I7/a67bGnokKsHzqVdGVteqqJOmFVsjf3ABrRppO7VyVUwfEYzzLG",
+        admim: true
+      }
+    });
+
+    res.send("Administrador criado com sucesso! ID: " + novo.id);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erro ao criar administrador: " + error.message);
+  }
 });
 
 router.post("/login", controller.login);
