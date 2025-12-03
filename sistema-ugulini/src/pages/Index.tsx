@@ -163,7 +163,7 @@ const Index = () => {
 
       <section className="py-16 bg-background">
         <div className="container">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-8 max-w-6xl mx-auto w-full px-4">
             <div>
               <h2 className="text-3xl font-bold mb-2">Imóveis em Destaque</h2>
               <p className="text-muted-foreground">
@@ -171,11 +171,12 @@ const Index = () => {
               </p>
             </div>
 
-            <Button variant="outline" asChild className="w-full items-center">
-              <Link
-                to="/imoveis"
-                className="inline-flex items-center justify-center w-full"
-              >
+            <Button
+              variant="outline"
+              asChild
+              className="hidden md:flex items-center"
+            >
+              <Link to="/imoveis" className="inline-flex items-center">
                 Ver Todos os Imóveis
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
