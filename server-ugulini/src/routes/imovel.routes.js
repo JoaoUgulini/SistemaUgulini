@@ -4,6 +4,19 @@ const upload = require("../config/multer");
 
 const router = Router();
 
+router.get("/fix/remove-unique-fotos", async (req, res) => {
+  try {
+    await prisma.$executeRawUnsafe(`
+      ALTER TABLE fotos DROP INDEX fotos_imovel_id_imovel_fkey;
+    `);
+
+    return res.json({ message: "Índice UNIQUE removido com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao remover UNIQUE:", error);
+    return res.status(500).json({ error: "Falha ao remover UNIQUE", detalhes: error });
+  }
+});
+
 // ROTA TEMPORÁRIA – DELETAR IMÓVEL POR ID (REMOVER DEPOIS)
 router.get("/deletar/:id", async (req, res) => {
   try {
