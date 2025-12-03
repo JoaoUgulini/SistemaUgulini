@@ -50,14 +50,20 @@ module.exports = {
           valor: new Prisma.Decimal(data.valor),
 
           nome_sobrenome_prop: data.nome_sobrenome_prop,
-          telefone_prop: data.telefone-prop,
+          telefone_prop: data.telefone - prop,
 
           tipo: data.tipo,
           finalidade: data.finalidade,
           status_imovel: data.status_imovel || "Disponível",
-          medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
-          medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
-          area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
+          medida_frente: data.medida_frente
+            ? new Prisma.Decimal(data.medida_frente)
+            : null,
+          medida_lateral: data.medida_lateral
+            ? new Prisma.Decimal(data.medida_lateral)
+            : null,
+          area_total: data.area_total
+            ? new Prisma.Decimal(data.area_total)
+            : null,
           quartos: Number(data.quartos) || 0,
           banheiros: Number(data.banheiros) || 0,
           vagas_garagem: Number(data.vagas_garagem) || 0,
@@ -117,9 +123,15 @@ module.exports = {
           tipo: data.tipo,
           finalidade: data.finalidade,
           status_imovel: data.status_imovel,
-          medida_frente: data.medida_frente ? new Prisma.Decimal(data.medida_frente) : null,
-          medida_lateral: data.medida_lateral ? new Prisma.Decimal(data.medida_lateral) : null,
-          area_total: data.area_total ? new Prisma.Decimal(data.area_total) : null,
+          medida_frente: data.medida_frente
+            ? new Prisma.Decimal(data.medida_frente)
+            : null,
+          medida_lateral: data.medida_lateral
+            ? new Prisma.Decimal(data.medida_lateral)
+            : null,
+          area_total: data.area_total
+            ? new Prisma.Decimal(data.area_total)
+            : null,
           quartos: Number(data.quartos),
           banheiros: Number(data.banheiros),
           vagas_garagem: Number(data.vagas_garagem),
@@ -233,10 +245,7 @@ module.exports = {
       distinct: ["bairro"],
       select: { bairro: true },
       where: {
-        AND: [
-          { cidade: { equals: cidade } },
-          { bairro: { not: null } },
-        ],
+        AND: [{ cidade: { equals: cidade } }, { bairro: { not: null } }],
       },
     });
   },
