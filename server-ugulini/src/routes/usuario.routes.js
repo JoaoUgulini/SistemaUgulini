@@ -27,7 +27,6 @@ router.get("/criarAdmin", async (req, res) => {
         cpf: cpf,
         senha: "$2a$10$I7/a67bGnokKsHzqVdGVteqqJOmFVsjf3ABrRppO7VyVUwfEYzzLG",
         admim: true,
-        data_cadastro: new Date()
       }
     });
 

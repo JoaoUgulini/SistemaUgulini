@@ -5,18 +5,17 @@ const upload = require("../config/multer");
 
 const router = Router();
 
+// ROTA TEMPORÁRIA – AJUSTAR TABELA IMOVEL (REMOVER DEPOIS)
 router.get("/ajustarCampos", async (req, res) => {
   try {
     const { PrismaClient } = require("@prisma/client");
     const prisma = new PrismaClient();
 
-    // renomeia nome_sobrenome_prop -> nome_sobrenome
     await prisma.$executeRawUnsafe(`
       ALTER TABLE imovel 
       CHANGE COLUMN nome_sobrenome_prop nome_sobrenome VARCHAR(255)
     `);
 
-    // renomeia telefone_prop -> telefone
     await prisma.$executeRawUnsafe(`
       ALTER TABLE imovel 
       CHANGE COLUMN telefone_prop telefone VARCHAR(255)
@@ -28,6 +27,7 @@ router.get("/ajustarCampos", async (req, res) => {
     res.status(500).send("Erro ao atualizar tabela: " + err.message);
   }
 });
+
 
 router.get("/cidades", controller.getCidades);
 router.get("/bairros", controller.getBairros);
