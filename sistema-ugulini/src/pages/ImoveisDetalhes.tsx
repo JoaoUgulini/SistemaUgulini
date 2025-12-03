@@ -28,7 +28,7 @@ import {
   Home,
 } from "lucide-react";
 
-interface Imoveis {
+interface Imovel {
   id: number | string;
   tipo: string;
   finalidade: string;
@@ -57,42 +57,32 @@ interface Imoveis {
 const ImoveisDetalhes = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [Imoveis, setImoveis] = useState<Imoveis | null>(null);
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
-    null
-  );
+  const [imovel, setImovel] = useState<Imovel | null>(null);
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [loading, setLoading] = useState(true);
-  const API_URL = api.defaults.baseURL;
-
   const token = sessionStorage.getItem("token");
 
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await api.get(`/imoveis/${id}`);
-        const imovel = res.data;
-        setImoveis(imovel);
+        setImovel(res.data);
 
-        if (imovel.endereco) {
+        if (res.data.endereco) {
           const addr = [
-            imovel.endereco.logradouro,
-            imovel.endereco.numero,
-            imovel.endereco.bairro,
-            imovel.endereco.cidade,
+            res.data.endereco.logradouro,
+            res.data.endereco.numero,
+            res.data.endereco.bairro,
+            res.data.endereco.cidade,
             "Rio Grande do Sul",
-            imovel.endereco.cep,
+            res.data.endereco.cep,
             "Brasil",
           ]
             .filter(Boolean)
             .join(", ");
 
           const location = await geocodeEndereco(addr);
-
-          if (location) {
-            setCoords(location);
-          } else {
-            console.warn("Google não encontrou as coordenadas.");
-          }
+          if (location) setCoords(location);
         }
       } catch (e) {
         console.error("Erro ao buscar imóvel:", e);
@@ -100,19 +90,14 @@ const ImoveisDetalhes = () => {
         setLoading(false);
       }
     }
-
     fetchData();
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Carregando...
-      </div>
-    );
+    return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
   }
 
-  if (!Imoveis) {
+  if (!imovel) {
     return (
       <div className="min-h-screen flex flex-col">
         <Cabecario />
@@ -133,16 +118,12 @@ const ImoveisDetalhes = () => {
       currency: "BRL",
     }).format(Number(v ?? 0));
 
-  const enderecoCompleto = Imoveis.endereco
-    ? `${Imoveis.endereco.logradouro ?? ""}${
-        Imoveis.endereco.numero ? ", " + Imoveis.endereco.numero : ""
-      }`
+  const enderecoCompleto = imovel.endereco
+    ? `${imovel.endereco.logradouro ?? ""}${imovel.endereco.numero ? ", " + imovel.endereco.numero : ""}`
     : "";
 
-  const cidadeEstado = Imoveis.endereco
-    ? `${Imoveis.endereco.bairro ?? ""}, ${Imoveis.endereco.cidade ?? ""}/${
-        Imoveis.endereco.estado ?? ""
-      }`
+  const cidadeEstado = imovel.endereco
+    ? `${imovel.endereco.bairro ?? ""}, ${imovel.endereco.cidade ?? ""}/${imovel.endereco.estado ?? ""}`
     : "";
 
   return (
@@ -150,11 +131,7 @@ const ImoveisDetalhes = () => {
       <Cabecario />
       <main className="flex-1 py-8">
         <div className="container">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/imoveis")}
-            className="mb-6"
-          >
+          <Button variant="ghost" onClick={() => navigate("/imoveis")} className="mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
           </Button>
 
@@ -162,14 +139,11 @@ const ImoveisDetalhes = () => {
             <div className="lg:col-span-2 space-y-6">
               <Card>
                 <CardContent className="p-6">
-                  {Imoveis.fotos && Imoveis.fotos.length > 0 ? (
+                  {imovel.fotos && imovel.fotos.length > 0 ? (
                     <Carousel className="w-full">
                       <CarouselContent>
-                        {Imoveis.fotos.map((foto, index) => (
-                          <CarouselItem
-                            key={index}
-                            className="flex justify-center"
-                          >
+                        {imovel.fotos.map((foto, index) => (
+                          <CarouselItem key={index} className="flex justify-center">
                             <img
                               src={foto.path_foto}
                               alt={`Foto ${index + 1}`}
@@ -178,7 +152,6 @@ const ImoveisDetalhes = () => {
                           </CarouselItem>
                         ))}
                       </CarouselContent>
-
                       <CarouselPrevious />
                       <CarouselNext />
                     </Carousel>
@@ -192,73 +165,56 @@ const ImoveisDetalhes = () => {
 
               <Card>
                 <CardContent className="p-6 space-y-6">
-                  <h1 className="text-3xl font-bold">{Imoveis.tipo}</h1>
+                  <h1 className="text-3xl font-bold">{imovel.tipo}</h1>
 
                   <p className="flex items-center text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-2" /> {cidadeEstado}
                   </p>
 
-                  <Badge>{Imoveis.finalidade}</Badge>
+                  <Badge>{imovel.finalidade}</Badge>
 
                   <Separator className={undefined} />
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {Imoveis.quartos !== undefined && (
+                    {imovel.quartos !== undefined && (
                       <div className="p-4 border rounded-lg flex items-center gap-3">
-                        <Bed />{" "}
-                        <span className="font-semibold">
-                          {Imoveis.quartos ?? "-"}
-                        </span>
+                        <Bed /> <span className="font-semibold">{imovel.quartos ?? "-"}</span>
                       </div>
                     )}
 
-                    {Imoveis.banheiros !== undefined && (
+                    {imovel.banheiros !== undefined && (
                       <div className="p-4 border rounded-lg flex items-center gap-3">
-                        <Bath />{" "}
-                        <span className="font-semibold">
-                          {Imoveis.banheiros ?? "-"}
-                        </span>
+                        <Bath /> <span className="font-semibold">{imovel.banheiros ?? "-"}</span>
                       </div>
                     )}
 
-                    {Imoveis.vagas_garagem !== undefined && (
+                    {imovel.vagas_garagem !== undefined && (
                       <div className="p-4 border rounded-lg flex items-center gap-3">
-                        <Car />{" "}
-                        <span className="font-semibold">
-                          {Imoveis.vagas_garagem ?? "-"}
-                        </span>
+                        <Car /> <span className="font-semibold">{imovel.vagas_garagem ?? "-"}</span>
                       </div>
                     )}
 
-                    {Imoveis.area_total !== undefined && (
+                    {imovel.area_total !== undefined && (
                       <div className="p-4 border rounded-lg flex items-center gap-3">
-                        <Maximize />{" "}
-                        <span className="font-semibold">
-                          {Imoveis.area_total ?? "-"} m²
-                        </span>
+                        <Maximize /> <span className="font-semibold">{imovel.area_total ?? "-"} m²</span>
                       </div>
                     )}
                   </div>
+
                   {token && (
                     <>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="p-4 border rounded-lg flex flex-col">
-                          <span className="text-sm text-muted-foreground">
-                            Proprietário
-                          </span>
+                          <span className="text-sm text-muted-foreground">Proprietário</span>
                           <span className="font-semibold">
-                            {Imoveis.nome_sobrenome}
+                            {imovel.nome_sobrenome || "Não informado"}
                           </span>
                         </div>
 
                         <div className="p-4 border rounded-lg flex flex-col">
-                          <span className="text-sm text-muted-foreground">
-                            Telefone
-                          </span>
+                          <span className="text-sm text-muted-foreground">Telefone</span>
                           <span className="font-semibold">
-                            {Imoveis.telefone
-                              ? Imoveis.telefone
-                              : "Sem telefone"}
+                            {imovel.telefone || "Sem telefone"}
                           </span>
                         </div>
                       </div>
@@ -267,18 +223,16 @@ const ImoveisDetalhes = () => {
                     </>
                   )}
 
-                  {Imoveis.descricao && (
+                  {imovel.descricao && (
                     <div>
                       <h2 className="text-xl font-semibold mb-2">Descrição</h2>
-                      <p className="text-muted-foreground">
-                        {Imoveis.descricao}
-                      </p>
+                      <p className="text-muted-foreground">{imovel.descricao}</p>
                     </div>
                   )}
 
                   <Separator className={undefined} />
 
-                  {Imoveis.endereco && (
+                  {imovel.endereco && (
                     <>
                       <h2 className="text-xl font-semibold mb-2">Endereço</h2>
                       <p>{enderecoCompleto}</p>
@@ -306,9 +260,7 @@ const ImoveisDetalhes = () => {
                 <CardContent className="p-6 space-y-6">
                   <div>
                     <p className="text-sm">Valor</p>
-                    <p className="text-3xl font-bold text-primary">
-                      {formataValor(Imoveis.valor)}
-                    </p>
+                    <p className="text-3xl font-bold text-primary">{formataValor(imovel.valor)}</p>
                   </div>
 
                   <Separator className={undefined} />
@@ -320,23 +272,13 @@ const ImoveisDetalhes = () => {
                     </a>
                   </Button>
 
-                  <Button
-                    variant="secondary"
-                    className="w-full"
-                    size="lg"
-                    asChild
-                  >
+                  <Button variant="secondary" className="w-full" size="lg" asChild>
                     <a href="tel:+555532551436">
                       <Phone className="mr-2 h-4 w-4" /> (55) 3255-1436
                     </a>
                   </Button>
 
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    size="lg"
-                    asChild
-                  >
+                  <Button variant="outline" className="w-full" size="lg" asChild>
                     <a href="mailto:ugulini@yahoo.com.br">
                       <Mail className="mr-2 h-4 w-4" /> E-mail
                     </a>
