@@ -154,7 +154,7 @@ const ImovelForm = () => {
     form.append("estado", estado);
     form.append("cep", cep);
 
-    images.forEach((f) => form.append("photos", f));
+    images.forEach((f) => form.append("fotos", f));
 
     return form;
   };
@@ -166,11 +166,17 @@ const ImovelForm = () => {
 
       if (isEditing) {
         await api.put(`/imoveis/${id}`, form, {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          
         });
       } else {
         await api.post("/imoveis", form, {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          
         });
       }
 
@@ -275,7 +281,6 @@ const ImovelForm = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            
                 <div className="space-y-2">
                   <Label>Quartos</Label>
                   <Input
@@ -396,10 +401,7 @@ const ImovelForm = () => {
 
                 <div className="space-y-2">
                   <Label>CEP</Label>
-                  <Input
-                    value={cep}
-                    onChange={(e) => setCep(e.target.value)}
-                  />
+                  <Input value={cep} onChange={(e) => setCep(e.target.value)} />
                 </div>
               </div>
             </CardContent>
@@ -435,7 +437,7 @@ const ImovelForm = () => {
                     {existingPhotos.map((url, index) => (
                       <img
                         key={index}
-                        src={url}
+                        src={`${API_URL}${url}`}
                         className="w-full h-32 object-cover rounded-lg border"
                       />
                     ))}
