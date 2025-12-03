@@ -154,7 +154,7 @@ const ImovelForm = () => {
     form.append("estado", estado);
     form.append("cep", cep);
 
-    images.forEach((f) => form.append("photos", f));
+    images.forEach((f) => form.append("fotos", f));
 
     return form;
   };
