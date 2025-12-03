@@ -11,6 +11,7 @@ const Navigation = () => {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/90 backdrop-blur supports-[backdrop-filter]:bg-card/60 shadow-warm">
       <div className="container flex h-16 items-center justify-between">
+
         <Link
           to="/"
           className="flex items-center transition-smooth hover:opacity-80"
@@ -22,7 +23,7 @@ const Navigation = () => {
           />
         </Link>
 
-        <div className="hidden md:flex items-center space-x-1">
+        <div className="flex items-center space-x-1">
           <Button
             variant={isActive("/") ? "secondary" : "ghost"}
             size="sm"
@@ -34,6 +35,7 @@ const Navigation = () => {
               Início
             </Link>
           </Button>
+
           <Button
             variant={isActive("/imoveis") ? "secondary" : "ghost"}
             size="sm"
@@ -45,6 +47,7 @@ const Navigation = () => {
               Imóveis
             </Link>
           </Button>
+
           <Button
             variant={isActive("/sobre") ? "secondary" : "ghost"}
             size="sm"
@@ -56,6 +59,7 @@ const Navigation = () => {
               Sobre Nós
             </Link>
           </Button>
+
           <Button
             variant={isActive("/contato") ? "secondary" : "ghost"}
             size="sm"
@@ -73,7 +77,7 @@ const Navigation = () => {
           variant="default"
           size="sm"
           asChild
-          className="hidden md:flex hover-lift"
+          className="flex hover-lift"
         >
           <Link to="/admin/login">
             <LogIn className="mr-2 h-4 w-4" />
