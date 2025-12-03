@@ -1,5 +1,15 @@
+// src/services/imovel.service.js
 const { PrismaClient, Prisma } = require("@prisma/client");
+const r2 = require("../config/r2");
+const { PutObjectCommand } = require("@aws-sdk/client-s3");
+const crypto = require("crypto");
 const prisma = new PrismaClient();
+
+function gerarNomeArquivo(originalname) {
+  const ext = originalname.split(".").pop();
+  const nome = crypto.randomBytes(16).toString("hex");
+  return `${nome}.${ext}`;
+}
 
 module.exports = {
   async list() {
@@ -47,14 +57,15 @@ module.exports = {
 
       const imovel = await prisma.imovel.create({
         data: {
-          valor: new Prisma.Decimal(data.valor),
+          valor: data.valor ? new Prisma.Decimal(data.valor) : null,
 
-          nome_sobrenome_prop: data.nome_sobrenome_prop,
-          telefone_prop: data.telefone - prop,
+          nome_sobrenome: data.nome_sobrenome || null,
+          telefone: data.telefone || null,
 
           tipo: data.tipo,
           finalidade: data.finalidade,
           status_imovel: data.status_imovel || "Disponível",
+
           medida_frente: data.medida_frente
             ? new Prisma.Decimal(data.medida_frente)
             : null,
@@ -64,21 +75,39 @@ module.exports = {
           area_total: data.area_total
             ? new Prisma.Decimal(data.area_total)
             : null,
-          quartos: Number(data.quartos) || 0,
-          banheiros: Number(data.banheiros) || 0,
-          vagas_garagem: Number(data.vagas_garagem) || 0,
+
+          quartos: data.quartos ? Number(data.quartos) : null,
+          banheiros: data.banheiros ? Number(data.banheiros) : null,
+          vagas_garagem: data.vagas_garagem ? Number(data.vagas_garagem) : null,
+
           descricao: data.descricao || null,
+
           id_endereco: endereco.id,
         },
       });
 
-      if (files.length > 0) {
-        await prisma.fotos.createMany({
-          data: files.map((f) => ({
-            id_imovel: imovel.id,
-            path_foto: `/uploads/${f.filename}`,
-          })),
-        });
+      if (files && files.length > 0) {
+        const uploads = [];
+
+        for (const file of files) {
+          const nomeArquivo = gerarNomeArquivo(file.originalname);
+
+          await r2.send(
+            new PutObjectCommand({
+              Bucket: process.env.CF_R2_BUCKET,
+              Key: nomeArquivo,
+              Body: file.buffer,
+              ContentType: file.mimetype,
+            })
+          );
+
+          uploads.push({
+            id_imovel: Number(imovel.id),
+            path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
+          });
+        }
+
+        await prisma.fotos.createMany({ data: uploads });
       }
 
       return await prisma.imovel.findUnique({
@@ -115,14 +144,15 @@ module.exports = {
       await prisma.imovel.update({
         where: { id: BigInt(id) },
         data: {
-          valor: new Prisma.Decimal(data.valor),
+          valor: data.valor ? new Prisma.Decimal(data.valor) : null,
 
-          nome_sobrenome_prop: data.nome_sobrenome_prop,
-          telefone_prop: data.telefone_prop,
+          nome_sobrenome: data.nome_sobrenome || null,
+          telefone: data.telefone || null,
 
           tipo: data.tipo,
           finalidade: data.finalidade,
           status_imovel: data.status_imovel,
+
           medida_frente: data.medida_frente
             ? new Prisma.Decimal(data.medida_frente)
             : null,
@@ -132,20 +162,38 @@ module.exports = {
           area_total: data.area_total
             ? new Prisma.Decimal(data.area_total)
             : null,
-          quartos: Number(data.quartos),
-          banheiros: Number(data.banheiros),
-          vagas_garagem: Number(data.vagas_garagem),
+
+          quartos: data.quartos ? Number(data.quartos) : null,
+          banheiros: data.banheiros ? Number(data.banheiros) : null,
+          vagas_garagem: data.vagas_garagem ? Number(data.vagas_garagem) : null,
+
           descricao: data.descricao,
         },
       });
 
-      if (files.length > 0) {
-        await prisma.fotos.createMany({
-          data: files.map((f) => ({
-            id_imovel: BigInt(id),
-            path_foto: `/uploads/${f.filename}`,
-          })),
-        });
+      if (files && files.length > 0) {
+        const uploads = [];
+
+        for (const file of files) {
+          const nomeArquivo = gerarNomeArquivo(file.originalname);
+
+          await r2.send(
+            new PutObjectCommand({
+              Bucket: process.env.CF_R2_BUCKET,
+              Key: nomeArquivo,
+              Body: file.buffer,
+              ContentType: file.mimetype,
+            })
+          );
+
+          uploads.push({
+            id_imovel: Number(id),
+            path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
+          });
+        }
+
+        console.log("Uploads (antes do createMany):", uploads);
+        await prisma.fotos.createMany({ data: uploads });
       }
 
       return await prisma.imovel.findUnique({
@@ -161,52 +209,42 @@ module.exports = {
   async filter(f) {
     const where = { AND: [] };
 
-    const isValid = (v) =>
+    const valid = (v) =>
       v !== undefined && v !== null && String(v).trim() !== "" && v !== "all";
 
-    if (isValid(f.cidade)) {
+    if (valid(f.cidade)) {
       where.AND.push({
         endereco: { is: { cidade: f.cidade } },
       });
     }
 
-    if (isValid(f.bairro)) {
+    if (valid(f.bairro)) {
       where.AND.push({
         endereco: { is: { bairro: f.bairro } },
       });
     }
 
-    if (isValid(f.negocio)) {
-      where.AND.push({
-        finalidade: f.negocio.toLowerCase(),
-      });
+    if (valid(f.negocio)) {
+      where.AND.push({ finalidade: f.negocio.toLowerCase() });
     }
 
-    if (isValid(f.tipoImovel)) {
-      where.AND.push({
-        tipo: f.tipoImovel.toLowerCase(),
-      });
+    if (valid(f.tipoImovel)) {
+      where.AND.push({ tipo: f.tipoImovel.toLowerCase() });
     }
 
-    if (isValid(f.quartos)) {
-      where.AND.push({
-        quartos: { gte: Number(f.quartos) },
-      });
+    if (valid(f.quartos)) {
+      where.AND.push({ quartos: { gte: Number(f.quartos) } });
     }
 
-    if (isValid(f.banheiros)) {
-      where.AND.push({
-        banheiros: { gte: Number(f.banheiros) },
-      });
+    if (valid(f.banheiros)) {
+      where.AND.push({ banheiros: { gte: Number(f.banheiros) } });
     }
 
-    if (isValid(f.vagas)) {
-      where.AND.push({
-        vagas_garagem: { gte: Number(f.vagas) },
-      });
+    if (valid(f.vagas)) {
+      where.AND.push({ vagas_garagem: { gte: Number(f.vagas) } });
     }
 
-    if (isValid(f.area)) {
+    if (valid(f.area)) {
       if (f.area.includes("-")) {
         const [min, max] = f.area.split("-");
         where.AND.push({
@@ -225,10 +263,7 @@ module.exports = {
 
     return prisma.imovel.findMany({
       where,
-      include: {
-        endereco: true,
-        fotos: true,
-      },
+      include: { endereco: true, fotos: true },
     });
   },
 
