@@ -171,7 +171,7 @@ const ImoveisDetalhes = () => {
                             className="flex justify-center"
                           >
                             <img
-                              src={`${API_URL}${foto.path_foto}`}
+                              src={foto.path_foto}
                               alt={`Foto ${index + 1}`}
                               className="w-full h-[400px] md:h-[500px] object-cover rounded-lg"
                             />

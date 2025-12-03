@@ -435,7 +435,7 @@ const ImovelForm = () => {
                     {existingPhotos.map((url, index) => (
                       <img
                         key={index}
-                        src={`${API_URL}${url}`}
+                        src={url}
                         className="w-full h-32 object-cover rounded-lg border"
                       />
                     ))}
