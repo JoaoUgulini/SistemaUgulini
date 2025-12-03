@@ -59,8 +59,8 @@ module.exports = {
         data: {
           valor: data.valor ? new Prisma.Decimal(data.valor) : null,
 
-          nome_sobrenome_prop: data.nome_sobrenome_prop || null,
-          telefone_prop: data.telefone_prop || null,
+          nome_sobrenome: data.nome_sobrenome || null,
+          telefone: data.telefone|| null,
 
           tipo: data.tipo,
           finalidade: data.finalidade,
@@ -146,8 +146,8 @@ module.exports = {
         data: {
           valor: data.valor ? new Prisma.Decimal(data.valor) : null,
 
-          nome_sobrenome_prop: data.nome_sobrenome_prop || null,
-          telefone_prop: data.telefone_prop || null,
+          nome_sobrenome: data.nome_sobrenome || null,
+          telefone: data.telefone|| null,
 
           tipo: data.tipo,
           finalidade: data.finalidade,
