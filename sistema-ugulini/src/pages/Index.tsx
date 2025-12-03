@@ -272,10 +272,12 @@ const Index = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link to="/imoveis">Ver Imóveis</Link>
+              <Link to="/imoveis"></Link>
+              Ver Imóveis
             </Button>
             <Button size="lg" variant="secondary" asChild>
-              <Link to="/contato">Falar com Corretor</Link>
+              <Link to="/contato"></Link>
+              Falar com Corretor
             </Button>
           </div>
         </div>
