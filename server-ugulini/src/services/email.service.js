@@ -1,7 +1,13 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-exports.enviarEmailContato = async ({ nome, email, telefone, assunto, mensagem }) => {
+exports.enviarEmailContato = async ({
+  nome,
+  email,
+  telefone,
+  assunto,
+  mensagem,
+}) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {

@@ -5,5 +5,5 @@ export const enviarContato = async (dados: any) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dados),
-  }).then(res => res.json());
+  }).then((res) => res.json());
 };

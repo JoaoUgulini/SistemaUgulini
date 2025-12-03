@@ -10,12 +10,12 @@ interface AdminLayoutProps {
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const isActive = (path: string) => location.pathname === path;
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
-    navigate("/");           
+    navigate("/");
   };
 
   return (
@@ -23,10 +23,13 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link to="/admin/dashboard" className="flex items-center transition-smooth hover:opacity-80">
+            <Link
+              to="/admin/dashboard"
+              className="flex items-center transition-smooth hover:opacity-80"
+            >
               <img src={logo} alt="Ugulini Admin" className="h-12 w-auto" />
             </Link>
-            
+
             <div className="hidden md:flex items-center space-x-1">
               <Button
                 variant={isActive("/admin/dashboard") ? "secondary" : "ghost"}
@@ -49,7 +52,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 </Link>
               </Button>
               <Button
-                variant={isActive("/admin/imoveis/novo") ? "secondary" : "ghost"}
+                variant={
+                  isActive("/admin/imoveis/novo") ? "secondary" : "ghost"
+                }
                 size="sm"
                 asChild
               >
@@ -76,9 +81,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         </div>
       </nav>
 
-      <main className="container py-8">
-        {children}
-      </main>
+      <main className="container py-8">{children}</main>
     </div>
   );
 };

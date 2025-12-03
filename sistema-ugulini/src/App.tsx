@@ -17,31 +17,29 @@ import PropertyForm from "./pages/admin/ImovelForm";
 const queryClient = new QueryClient();
 
 const App = () => (
-    <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/imoveis" element={<Imoveis />} />
-                    <Route path="/imoveis/:id" element={<ImoveisDetalhes />} />
-                    <Route path="/sobre" element={<Sobre />} />
-                    <Route path="/contato" element={<Contato />} />
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/imoveis" element={<Imoveis />} />
+          <Route path="/imoveis/:id" element={<ImoveisDetalhes />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/contato" element={<Contato />} />
 
-                    {/* Admin Routes */}
-                    <Route path="/admin/login" element={<Login />} />
-                    <Route path="/admin/dashboard" element={<Dashboard />} />
-                    <Route path="/admin/imoveis" element={<PropertiesList />} />
-                    <Route path="/admin/imoveis/novo" element={<PropertyForm />} />
-                    <Route path="/admin/imoveis/:id/editar" element={<PropertyForm />} />
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/imoveis" element={<PropertiesList />} />
+          <Route path="/admin/imoveis/novo" element={<PropertyForm />} />
+          <Route path="/admin/imoveis/:id/editar" element={<PropertyForm />} />
 
-                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                    <Route path="*" element={<Error404 />} />
-                </Routes>
-            </BrowserRouter>
-        </TooltipProvider>
-    </QueryClientProvider>
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
 );
 
 export default App;

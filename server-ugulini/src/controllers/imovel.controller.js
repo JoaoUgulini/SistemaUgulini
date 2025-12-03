@@ -33,10 +33,12 @@ module.exports = {
     try {
       const data = req.body;
       const files = req.files;
+      console.log("FILES RECEBIDOS:", req.files);
 
       const novo = await service.create(data, files);
       res.status(201).json(novo);
     } catch (error) {
+      console.log("FILES RECEBIDOS:", req.files);
       console.error("Erro no controller.create:", error);
       res.status(500).json({ error: "Erro ao criar imóvel" });
     }
@@ -47,10 +49,11 @@ module.exports = {
       const { id } = req.params;
       const data = req.body;
       const files = req.files;
-
+      console.log("FILES RECEBIDOS:", req.files);
       const atualizado = await service.update(id, data, files);
       res.json(atualizado);
     } catch (error) {
+      console.log("FILES RECEBIDOS:", req.files);
       console.error("Erro no controller.update:", error);
       res.status(500).json({ error: "Erro ao atualizar imóvel" });
     }

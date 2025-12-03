@@ -1,34 +1,26 @@
-// src/components/PropertyMap.tsx
 import { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { loadGoogleMaps } from "@/lib/loadGoogleMaps";
-
 declare global {
   interface Window {
     google: any;
   }
 }
-
 interface Props {
   lat: number;
   lng: number;
   zoom?: number;
 }
-
-const PropertyMap = ({ lat, lng, zoom = 16 }: Props) => {
+const ImoveisMap = ({ lat, lng, zoom = 16 }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
-
   useEffect(() => {
     let mounted = true;
-
     async function setup() {
       try {
         await loadGoogleMaps();
         if (!mounted || !ref.current) return;
-
         const center = { lat, lng };
-
         if (mapRef.current) {
           mapRef.current.setCenter(center);
           mapRef.current.setZoom(zoom);
@@ -40,7 +32,6 @@ const PropertyMap = ({ lat, lng, zoom = 16 }: Props) => {
             streetViewControl: false,
           });
         }
-
         new window.google.maps.Marker({
           position: center,
           map: mapRef.current,
@@ -49,9 +40,7 @@ const PropertyMap = ({ lat, lng, zoom = 16 }: Props) => {
         console.error("Erro ao inicializar Google Maps:", e);
       }
     }
-
     setup();
-
     return () => {
       mounted = false;
     };
@@ -71,4 +60,4 @@ const PropertyMap = ({ lat, lng, zoom = 16 }: Props) => {
   );
 };
 
-export default PropertyMap;
+export default ImoveisMap;

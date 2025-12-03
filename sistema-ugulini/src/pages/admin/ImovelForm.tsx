@@ -154,7 +154,9 @@ const ImovelForm = () => {
     form.append("estado", estado);
     form.append("cep", cep);
 
-    images.forEach((f) => form.append("fotos", f));
+    images.forEach((file) => {
+      form.append("fotos", file);
+    });
 
     return form;
   };
@@ -169,14 +171,12 @@ const ImovelForm = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          
         });
       } else {
         await api.post("/imoveis", form, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          
         });
       }
 
@@ -416,6 +416,7 @@ const ImovelForm = () => {
                 <input
                   type="file"
                   id="images"
+                  name="fotos"
                   multiple
                   accept="image/*"
                   onChange={handleImageUpload}
@@ -437,7 +438,7 @@ const ImovelForm = () => {
                     {existingPhotos.map((url, index) => (
                       <img
                         key={index}
-                        src={`${API_URL}${url}`}
+                        src={url}
                         className="w-full h-32 object-cover rounded-lg border"
                       />
                     ))}

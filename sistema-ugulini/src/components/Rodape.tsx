@@ -8,18 +8,23 @@ const Footer = () => {
       <div className="container py-12">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
-            <img src={logo} alt="Ugulini Contabilidade e Imóveis" className="h-16 w-auto" />
+            <img
+              src={logo}
+              alt="Ugulini Contabilidade e Imóveis"
+              className="h-16 w-auto"
+            />
             <p className="text-sm text-muted-foreground">
-              Tradição em contabilidade e imóveis em Jaguari/RS. Modernizando com tecnologia,
-              mantendo os valores de ética e confiança que nos definem.
+              Tradição em contabilidade e imóveis em Jaguari/RS. Modernizando
+              com tecnologia, mantendo os valores de ética e confiança que nos
+              definem.
             </p>
           </div>
 
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Contato</h3>
             <div className="space-y-3">
-              <a 
-                href="https://wa.me/555532551436" 
+              <a
+                href="https://wa.me/555532551436"
                 className="flex items-center space-x-3 text-sm text-muted-foreground hover:text-primary transition-smooth link-soft"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -27,8 +32,8 @@ const Footer = () => {
                 <Phone className="h-4 w-4" />
                 <span>(55) 3255-1436</span>
               </a>
-              <a 
-                href="mailto:ugulini@yahoo.com.br" 
+              <a
+                href="mailto:ugulini@yahoo.com.br"
                 className="flex items-center space-x-3 text-sm text-muted-foreground hover:text-primary transition-smooth link-soft"
               >
                 <Mail className="h-4 w-4" />
@@ -36,7 +41,11 @@ const Footer = () => {
               </a>
               <div className="flex items-start space-x-3 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                <span>Rua Prefeito Ervandil Reghelin, 395 - Centro<br />Jaguari/RS - CEP 97760-000</span>
+                <span>
+                  Rua Prefeito Ervandil Reghelin, 395 - Centro
+                  <br />
+                  Jaguari/RS - CEP 97760-000
+                </span>
               </div>
             </div>
           </div>
@@ -44,16 +53,28 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Links Rápidos</h3>
             <div className="flex flex-col space-y-2">
-              <Link to="/" className="text-sm text-muted-foreground hover:text-primary transition-smooth link-soft">
+              <Link
+                to="/"
+                className="text-sm text-muted-foreground hover:text-primary transition-smooth link-soft"
+              >
                 Início
               </Link>
-              <Link to="/imoveis" className="text-sm text-muted-foreground hover:text-primary transition-smooth link-soft">
+              <Link
+                to="/imoveis"
+                className="text-sm text-muted-foreground hover:text-primary transition-smooth link-soft"
+              >
                 Imóveis
               </Link>
-              <Link to="/sobre" className="text-sm text-muted-foreground hover:text-primary transition-smooth link-soft">
+              <Link
+                to="/sobre"
+                className="text-sm text-muted-foreground hover:text-primary transition-smooth link-soft"
+              >
                 Sobre Nós
               </Link>
-              <Link to="/contato" className="text-sm text-muted-foreground hover:text-primary transition-smooth link-soft">
+              <Link
+                to="/contato"
+                className="text-sm text-muted-foreground hover:text-primary transition-smooth link-soft"
+              >
                 Contato
               </Link>
             </div>
@@ -61,7 +82,10 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Ugulini Contabilidade e Imóveis. Todos os direitos reservados.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Ugulini Contabilidade e Imóveis.
+            Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </footer>
