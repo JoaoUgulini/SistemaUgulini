@@ -16,8 +16,10 @@ const Navigation = () => {
   const isLogged = Boolean(sessionStorage.getItem("token"));
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/90 backdrop-blur supports-[backdrop-filter]:bg-card/60 shadow-warm">
-      <div className="flex h-16 items-center justify-between px-4 md:container">
+    <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/90 backdrop-blur supports-[backdrop-filter]:bg-card/60 shadow-warm overflow-x-hidden">
+      
+      <div className="flex h-16 items-center justify-between px-4 md:container overflow-x-hidden">
+
         <Link
           to="/"
           className="flex items-center transition-smooth hover:opacity-80"
@@ -29,7 +31,7 @@ const Navigation = () => {
           />
         </Link>
 
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-1 overflow-x-hidden">
           <Button
             variant={isActive("/") ? "secondary" : "ghost"}
             size="sm"
@@ -90,6 +92,7 @@ const Navigation = () => {
             </Link>
           </Button>
         )}
+
       </div>
     </nav>
   );

@@ -102,7 +102,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Cabecario />
 
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
