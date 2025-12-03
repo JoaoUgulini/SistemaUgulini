@@ -22,6 +22,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     <div className="min-h-screen bg-background">
       <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
         <div className="container flex h-16 items-center justify-between">
+
           <div className="flex items-center gap-6">
             <Link
               to="/admin/dashboard"
@@ -30,7 +31,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
               <img src={logo} alt="Ugulini Admin" className="h-12 w-auto" />
             </Link>
 
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="flex items-center space-x-1">
               <Button
                 variant={isActive("/admin/dashboard") ? "secondary" : "ghost"}
                 size="sm"
@@ -41,6 +42,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                   Dashboard
                 </Link>
               </Button>
+
               <Button
                 variant={isActive("/admin/imoveis") ? "secondary" : "ghost"}
                 size="sm"
@@ -51,10 +53,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                   Imóveis
                 </Link>
               </Button>
+
               <Button
-                variant={
-                  isActive("/admin/imoveis/novo") ? "secondary" : "ghost"
-                }
+                variant={isActive("/admin/imoveis/novo") ? "secondary" : "ghost"}
                 size="sm"
                 asChild
               >
@@ -73,11 +74,13 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 Ver Site
               </Link>
             </Button>
+
             <Button variant="outline" size="sm" onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
               Sair
             </Button>
           </div>
+
         </div>
       </nav>
 

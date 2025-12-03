@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Building2, Users, Phone, LogIn } from "lucide-react";
+import { Home, Building2, Users, Phone, LogIn, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/ugulini-logo.png";
 
@@ -8,10 +8,12 @@ const Navigation = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const isLogged = Boolean(sessionStorage.getItem("token"));
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/90 backdrop-blur supports-[backdrop-filter]:bg-card/60 shadow-warm">
       <div className="container flex h-16 items-center justify-between">
-
+        
         <Link
           to="/"
           className="flex items-center transition-smooth hover:opacity-80"
@@ -73,17 +75,24 @@ const Navigation = () => {
           </Button>
         </div>
 
-        <Button
-          variant="default"
-          size="sm"
-          asChild
-          className="flex hover-lift"
-        >
-          <Link to="/admin/login">
-            <LogIn className="mr-2 h-4 w-4" />
-            Login
-          </Link>
-        </Button>
+        {isLogged ? (
+          <div className="flex items-center text-green-600 font-medium gap-2">
+            <CheckCircle className="h-5 w-5" />
+            Logado
+          </div>
+        ) : (
+          <Button
+            variant="default"
+            size="sm"
+            asChild
+            className="flex hover-lift"
+          >
+            <Link to="/admin/login">
+              <LogIn className="mr-2 h-4 w-4" />
+              Login
+            </Link>
+          </Button>
+        )}
       </div>
     </nav>
   );
