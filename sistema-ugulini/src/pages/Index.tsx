@@ -202,10 +202,8 @@ const Index = () => {
 
           <div className="mt-8 text-center md:hidden">
             <Button variant="outline" asChild className="w-full">
-              <a href="/imoveis">
-                Ver Todos os Imóveis
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+              <Link to="/imoveis">Ver Todos os Imóveis
+                <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
           </div>
         </div>
