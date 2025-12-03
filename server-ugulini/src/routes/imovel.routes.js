@@ -9,18 +9,17 @@ router.get("/ajustar/banheiro-para-banheiros", async (req, res) => {
     const { PrismaClient } = require("@prisma/client");
     const prisma = new PrismaClient();
 
-    // Executa o SQL bruto para renomear a coluna
     await prisma.$executeRawUnsafe(`
       ALTER TABLE imovel
       CHANGE COLUMN banheiro banheiros INT NULL;
     `);
 
-    res.send("Coluna 'banheiro' renomeada para 'banheiros' com sucesso!");
+    res.send("Coluna renomeada!");
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Erro ao renomear coluna: " + err.message);
+    res.status(500).send("Erro: " + err.message);
   }
 });
+
 
 // ROTA TEMPORÁRIA – DELETAR IMÓVEL POR ID (REMOVER DEPOIS)
 router.get("/deletar/:id", async (req, res) => {
