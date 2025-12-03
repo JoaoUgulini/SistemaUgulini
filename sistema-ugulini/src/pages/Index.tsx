@@ -171,12 +171,15 @@ const Index = () => {
               </p>
             </div>
 
-            <Button variant="outline" asChild className="w-full">
-  <Link to="/imoveis">
-    Ver Todos os Imóveis
-    <ArrowRight className="ml-2 h-4 w-4" />
-  </Link>
-</Button>
+            <Button variant="outline" asChild className="w-full items-center">
+              <Link
+                to="/imoveis"
+                className="inline-flex items-center justify-center w-full"
+              >
+                Ver Todos os Imóveis
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
 
           {loading ? (
@@ -202,8 +205,10 @@ const Index = () => {
 
           <div className="mt-8 text-center md:hidden">
             <Button variant="outline" asChild className="w-full">
-              <Link to="/imoveis">Ver Todos os Imóveis
-                <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              <Link to="/imoveis">
+                Ver Todos os Imóveis
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </div>
