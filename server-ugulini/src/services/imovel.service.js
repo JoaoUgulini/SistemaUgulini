@@ -60,7 +60,7 @@ module.exports = {
           valor: data.valor ? new Prisma.Decimal(data.valor) : null,
 
           nome_sobrenome: data.nome_sobrenome || null,
-          telefone: data.telefone|| null,
+          telefone: data.telefone || null,
 
           tipo: data.tipo,
           finalidade: data.finalidade,
@@ -102,7 +102,7 @@ module.exports = {
           );
 
           uploads.push({
-            id_imovel: imovel.id,
+            id_imovel: Number(imovel.id),
             path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
           });
         }
@@ -147,7 +147,7 @@ module.exports = {
           valor: data.valor ? new Prisma.Decimal(data.valor) : null,
 
           nome_sobrenome: data.nome_sobrenome || null,
-          telefone: data.telefone|| null,
+          telefone: data.telefone || null,
 
           tipo: data.tipo,
           finalidade: data.finalidade,
@@ -187,11 +187,12 @@ module.exports = {
           );
 
           uploads.push({
-            id_imovel: BigInt(id),
+            id_imovel: Number(id),
             path_foto: `${process.env.CF_R2_PUBLIC_URL}/${nomeArquivo}`,
           });
         }
 
+        console.log("Uploads (antes do createMany):", uploads);
         await prisma.fotos.createMany({ data: uploads });
       }
 
