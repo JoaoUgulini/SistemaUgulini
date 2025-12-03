@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Cabecario from "@/components/Cabecario";
 import Rodape from "@/components/Rodape";
 import ImoveisCard from "@/components/ImoveisCard";
@@ -11,7 +11,6 @@ import {
   Award,
   Users,
   Home as HomeIcon,
-  Link,
 } from "lucide-react";
 import {
   Select,
@@ -272,12 +271,10 @@ const Index = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link to="/imoveis"></Link>
-              Ver Imóveis
+              <Link to="/imoveis">Ver Imóveis</Link>
             </Button>
             <Button size="lg" variant="secondary" asChild>
-              <Link to="/contato"></Link>
-              Falar com Corretor
+              <Link to="/contato">Falar com Corretor</Link>
             </Button>
           </div>
         </div>
