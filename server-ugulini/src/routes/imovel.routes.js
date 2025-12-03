@@ -4,17 +4,21 @@ const upload = require("../config/multer");
 
 const router = Router();
 
-router.get("/renamebanheiro", async (req, res) => {
+router.get("/ajustar/banheiro-para-banheiros", async (req, res) => {
   try {
+    const { PrismaClient } = require("@prisma/client");
+    const prisma = new PrismaClient();
+
+    // Executa o SQL bruto para renomear a coluna
     await prisma.$executeRawUnsafe(`
       ALTER TABLE imovel
       CHANGE COLUMN banheiro banheiros INT NULL;
     `);
 
-    res.json({ ok: true, mensagem: "Coluna renomeada com sucesso!" });
-  } catch (e) {
-    console.error("Erro ao renomear coluna:", e);
-    res.status(500).json({ erro: "Erro ao renomear coluna", detalhes: e });
+    res.send("Coluna 'banheiro' renomeada para 'banheiros' com sucesso!");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erro ao renomear coluna: " + err.message);
   }
 });
 
