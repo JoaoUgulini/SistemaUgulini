@@ -20,8 +20,8 @@ const Navigation = () => {
       <div className="flex h-16 items-center justify-between px-4 md:container overflow-x-auto whitespace-nowrap">
         <Link
           to="/"
-          className="flex items-center transition-smooth hover:opacity-80"
-        >
+          className="flex-shrink-0 flex items-center hover:opacity-80">
+        
           <img
             src={logo}
             alt="Ugulini Contabilidade e Imóveis"
@@ -29,7 +29,7 @@ const Navigation = () => {
           />
         </Link>
 
-        <div className="flex items-center space-x-1 overflow-x-hidden">
+        <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
           <Button
             variant={isActive("/") ? "secondary" : "ghost"}
             size="sm"
@@ -74,7 +74,7 @@ const Navigation = () => {
             </Link>
           </Button>
         </div>
-
+        <div className="flex-shrink-0 whitespace-nowrap">
         {isLogged ? (
           <Button variant="secondary" size="sm" asChild>
             <Link to="/admin/dashboard">
@@ -90,6 +90,7 @@ const Navigation = () => {
             </Link>
           </Button>
         )}
+        </div>
       </div>
     </nav>
   );
