@@ -19,19 +19,21 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="container flex h-16 items-center justify-between">
+    <div className="min-h-screen bg-background overflow-x-hidden">
 
-          <div className="flex items-center gap-6">
+      <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 overflow-x-auto whitespace-nowrap">
+
+        <div className="flex h-16 items-center justify-between px-4 md:container gap-4 whitespace-nowrap">
+
+          <div className="flex items-center gap-6 flex-shrink-0 whitespace-nowrap">
             <Link
               to="/admin/dashboard"
-              className="flex items-center transition-smooth hover:opacity-80"
+              className="flex items-center transition-smooth hover:opacity-80 flex-shrink-0"
             >
               <img src={logo} alt="Ugulini Admin" className="h-12 w-auto" />
             </Link>
 
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1 flex-shrink-0 whitespace-nowrap">
               <Button
                 variant={isActive("/admin/dashboard") ? "secondary" : "ghost"}
                 size="sm"
@@ -67,7 +69,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
             <Button variant="ghost" size="sm" asChild>
               <Link to="/">
                 <Home className="mr-2 h-4 w-4" />
@@ -84,7 +86,10 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         </div>
       </nav>
 
-      <main className="container py-8">{children}</main>
+      <main className="px-4 md:container py-8 overflow-x-hidden">
+        {children}
+      </main>
+
     </div>
   );
 };
