@@ -4,26 +4,17 @@ const upload = require("../config/multer");
 
 const router = Router();
 
-router.get("/remove-unique-fotos", async (req, res) => {
+router.get("/renamebanheiro", async (req, res) => {
   try {
     await prisma.$executeRawUnsafe(`
-      ALTER TABLE fotos DROP INDEX fotos_imovel_id_imovel_fkey;
+      ALTER TABLE imovel
+      CHANGE COLUMN banheiro banheiros INT NULL;
     `);
 
-    return res.json({ message: "Índice UNIQUE removido com sucesso!" });
-  } catch (error) {
-    console.error("Erro ao remover UNIQUE:", error);
-    return res.status(500).json({ error: "Falha ao remover UNIQUE", detalhes: error });
-  }
-});
-
-router.get("/indexes", async (req, res) => {
-  try {
-    const indexes = await prisma.$queryRawUnsafe(`SHOW INDEXES FROM fotos;`);
-    return res.json(indexes);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
+    res.json({ ok: true, mensagem: "Coluna renomeada com sucesso!" });
+  } catch (e) {
+    console.error("Erro ao renomear coluna:", e);
+    res.status(500).json({ erro: "Erro ao renomear coluna", detalhes: e });
   }
 });
 
