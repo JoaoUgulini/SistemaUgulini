@@ -166,11 +166,11 @@ const ImovelForm = () => {
 
       if (isEditing) {
         await api.put(`/imoveis/${id}`, form, {
-          headers: { "Content-Type": "multipart/form-data" },
+          
         });
       } else {
         await api.post("/imoveis", form, {
-          headers: { "Content-Type": "multipart/form-data" },
+          
         });
       }
 
