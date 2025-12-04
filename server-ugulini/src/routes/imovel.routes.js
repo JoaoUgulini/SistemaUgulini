@@ -12,6 +12,7 @@ router.put("/:id", upload.array("fotos", 15), controller.update);
 router.patch("/inativar/:id", controller.inativar);
 
 router.get("/", controller.list);
+router.get("/all", controller.listAll);
 
 router.get("/:id", controller.getById);
 

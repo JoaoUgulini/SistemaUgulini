@@ -12,6 +12,22 @@ function gerarNomeArquivo(originalname) {
 }
 
 module.exports = {
+
+
+  async listAll() {
+    try {
+      return await prisma.imovel.findMany({
+        include: {
+          endereco: true,
+          fotos: true,
+        },
+      });
+    } catch (error) {
+      console.error("Erro no service.list():", error);
+      throw error;
+    }
+  },
+
   async list() {
     try {
       return await prisma.imovel.findMany({

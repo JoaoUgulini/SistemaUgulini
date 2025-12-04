@@ -2,6 +2,17 @@ const service = require("../services/imovel.service");
 const { Prisma } = require("@prisma/client");
 
 module.exports = {
+
+  async listAll(req, res) {
+    try {
+      const imoveis = await service.listAll();
+      res.json(imoveis);
+    } catch (error) {
+      console.error("Erro no controller.list:", error);
+      res.status(500).json({ error: "Erro ao listar imóveis" });
+    }
+  },
+
   async list(req, res) {
     try {
       const imoveis = await service.list();

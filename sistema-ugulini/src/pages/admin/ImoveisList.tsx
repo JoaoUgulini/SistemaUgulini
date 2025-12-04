@@ -34,7 +34,7 @@ const ImoveisList = () => {
   useEffect(() => {
     const loadImoveis = async () => {
       try {
-        const response = await api.get("/imoveis");
+        const response = await api.get("/imoveis/all");
         setImoveis(response.data);
       } catch (error) {
         console.error("Erro ao buscar imóveis:", error);
