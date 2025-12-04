@@ -54,6 +54,15 @@ const ImoveisList = () => {
     }).format(value);
   };
 
+  const inativarImovel = async (id: number) => {
+    try {
+      await api.patch(`/imoveis/inativar/${id}`);
+      setImoveis((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Erro ao inativar imóvel:", error);
+    }
+  };
+
   const buscarImoveis = async (filters: any) => {
     setLoading(true);
 
@@ -152,7 +161,11 @@ const ImoveisList = () => {
                       Editar
                     </Link>
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => inativarImovel(property.id)}
+                  >
                     <Trash2 className="h-3 w-3" />
                   </Button>
                 </div>

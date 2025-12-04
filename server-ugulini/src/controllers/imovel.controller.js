@@ -29,6 +29,26 @@ module.exports = {
         .json({ error: "Erro ao buscar imóvel", detalhe: error.message });
     }
   },
+
+  async inativar(req, res) {
+  try {
+    const { id } = req.params;
+
+    const prisma = require("@prisma/client").PrismaClient;
+    const db = new prisma();
+
+    const atualizado = await db.imovel.update({
+      where: { id: Number(id) },
+      data: { status_imovel: "Inativo" }
+    });
+
+    res.json({ message: "Imóvel inativado com sucesso", atualizado });
+  } catch (error) {
+    console.error("Erro no controller.inativar:", error);
+    res.status(500).json({ error: "Erro ao inativar imóvel" });
+  }
+},
+
   async create(req, res) {
     try {
       const data = req.body;

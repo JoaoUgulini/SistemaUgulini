@@ -15,6 +15,9 @@ module.exports = {
   async list() {
     try {
       return await prisma.imovel.findMany({
+        where: {
+          status_imovel: "Disponivel",
+        },
         include: {
           endereco: true,
           fotos: true,
@@ -37,6 +40,20 @@ module.exports = {
       });
     } catch (error) {
       console.error("Erro no service.getById():", error);
+      throw error;
+    }
+  },
+
+  async inativar(id) {
+    try {
+      return await prisma.imovel.update({
+        where: { id: Number(id) },
+        data: {
+          status_imovel: "Inativo",
+        },
+      });
+    } catch (error) {
+      console.error("Erro no service.inativar:", error);
       throw error;
     }
   },
